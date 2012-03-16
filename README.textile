@@ -4,11 +4,11 @@ h1. TinkerPop Documentation
 
 "TinkerPop":http://tinkerpop.com documentation for:
 
-* "Blueprints":http://blueprints.tinkerpop.com: A lazy, data flow framework
-* "Pipes":http://pipes.tinkerpop.com: A lazy, data flow framework
+* "Blueprints":http://blueprints.tinkerpop.com: A property graph model interface
+* "Pipes":http://pipes.tinkerpop.com: A lazy data flow framework
 * "Gremlin":http://gremlin.tinkerpop.com: A graph traversal language
-* "Frames":http://frames.tinkerpop.com: An object-to-graph mapper
-* "Furnace":http://furnace.tinkerpop.com: A graph algorithms package
+* "Frames":http://frames.tinkerpop.com: An object to graph framework
+* "Furnace":http://furnace.tinkerpop.com: A property graph algorithms package
 * "Rexster":http://rexster.tinkerpop.com: A graph server
 
 TinkerPop documentation is generated from GitHub TinkerPop wikis by converting them into .html files using "gollum":https://github.com/github/gollum
