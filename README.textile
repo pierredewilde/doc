@@ -1,8 +1,8 @@
-[[public/images/tinkerpop-splash.png|width=220px|align=right|float]]
+[[public/images/tinkerpop-splash.png|width=220px]]
 
-h1. TinkerPop .html Documentation
+h1. TinkerPop Documentation
 
-"TinkerPop":http://tinkerpop.com .html documentation for: 
+"TinkerPop":http://tinkerpop.com documentation for: 
 
 * "Blueprints":http://blueprints.tinkerpop.com: A lazy, data flow framework
 * "Pipes":http://pipes.tinkerpop.com: A lazy, data flow framework
@@ -10,3 +10,5 @@ h1. TinkerPop .html Documentation
 * "Frames":http://frames.tinkerpop.com: An object-to-graph mapper
 * "Furnace":http://furnace.tinkerpop.com: A graph algorithms package
 * "Rexster":http://rexster.tinkerpop.com: A graph server
+
+2012-03-16
