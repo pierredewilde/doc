@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../public/css/editor/gollum.editor.js"></script>
+  <title>Dex Implementation</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head">
+<div><a href="../index.html">TinkerPop</a> - <a href="Home.html">Blueprints</a></div>
+  <h1>Dex Implementation</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Dex-Implementation"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Dex-Implementation"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p><img src="http://www.sparsity-technologies.com/images/sparsity_logo_web.png" /></p>
+<pre><code>&lt;dependency&gt;
+   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+   &lt;artifactId&gt;blueprints-dex-graph&lt;/artifactId&gt;
+   &lt;version&gt;??&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<pre><code>Graph graph = new DexGraph("/tmp/graph.dex");</code></pre>
+<p><a href="http://www.sparsity-technologies.com/dex"><span class="caps">DEX</span></a> is a graph database developed by <a href="http://www.sparsity-technologies.com/">Sparsity Technologies</a>. For a fine summary of the <span class="caps">DEX</span> graph database, please review the following <a href="http://www.sparsity-technologies.com/dex_tutorials">presentations</a>. The software can be downloaded from <a href="http://www.sparsity-technologies.com/dex_downloads">here</a> and be used with the default evaluation license (which restricts the amount of information <span class="caps">DEX</span> can deal with).</p>
+<p><span class="caps">DEX</span> natively supports the property graph data model defined by Blueprints. However, there are a few peculiarities.</p>
+<ol><li><strong>No user defined element identifiers</strong>: <span class="caps">DEX</span> is the gatekeeper and creator of vertex and edge identifiers. Thus, when creating a new vertex or edge instance, the provided object identifier is ignored.</li>
+	<li><strong>Vertices are labeled too</strong>: When adding vertices, the user can set <code>DEXGraph#LABEL</code> to be used as the label of the vertex to be created. Also, the label of a vertex (or even an element) can be retrieved through the <code>DEXElement#LABEL_PROPERTY</code> property.</li>
+</ol><p><code>DexGraph</code> implements <code>IndexableGraph</code>. However, the use of indices is limited when working with <span class="caps">DEX</span> and is explained as follows:</p>
+<ol><li>There is no support to create indices.</li>
+	<li>By default, there is an <code>AutomaticIndex</code> for each existing label which corresponds to the name of the index. Also, each index contains a key for each existing property.</li>
+</ol><p><strong>Memory configuration</strong></p>
+<p><span class="caps">DEX</span> memory is not managed by the <span class="caps">JVM</span> heap, so an specific memory configuration must be set for <span class="caps">DEX</span> in order to set the maximum amount of memory to be used by a <span class="caps">DEX</span> application.</p>
+<p>Specifically, users should set <code>dex.io.cache.maxsize</code> as is explained <a href="http://www.sparsity-technologies.com/downloads/javadoc/edu/upc/dama/dex/utils/DEXConfig.html">here</a>.</p>
+<p><strong>Managment of <code>Iterable</code> collections</strong></p>
+<p>As before, since <span class="caps">DEX</span> resources are not managed by the <span class="caps">JVM</span> heap, <span class="caps">DEX</span>-based blueprints applications should take into account the management of <code>Iterable</code> collections and explicitly close them in order to free native resources.</p>
+<p>For example, if we execute a long traversal like this:</p>
+<pre><code>for (final Vertex vertex : graph.getVertices()) {
+    for (final Edge edge : vertex.getOutEdges()) {
+        final Vertex vertex2 = edge.getInVertex();
+        for (final Edge edge2 : vertex2.getOutEdges()) {
+            ...
+        }
+    }
+}</code></pre>
+<p>all retrieved collections won&#x2019;t be closed until the graph database is stopped. Of course, keep active this amount of resources will have a negative impact in the performance. To avoid this, we should implement something like this:</p>
+<pre><code>DexIterable&lt;Vertex&gt; vv = (DexIterable&lt;Vertex&gt;)graph.getVertices();
+for (final Vertex vertex : vv) {
+    DexIterable&lt;Edge&gt; ee = (DexIterable&lt;Edge&gt;)vertex.getOutEdges();
+    for (final Edge edge : ee) {
+        final Vertex vertex2 = edge.getInVertex();
+        DexIterable&lt;Edge&gt; ee2 = (DexIterable&lt;Edge&gt;)vertex2.getOutEdges();
+        for (final Edge edge2 : ee2) {
+            ...
+        }
+        ee2.close();
+    }
+    ee.close();
+}
+vv.close();</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>hendrens</b>, 2012-03-10 19:23:44</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

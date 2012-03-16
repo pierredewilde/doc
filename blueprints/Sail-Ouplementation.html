@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../public/css/editor/gollum.editor.js"></script>
+  <title>Sail Ouplementation</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head">
+<div><a href="../index.html">TinkerPop</a> - <a href="Home.html">Blueprints</a></div>
+  <h1>Sail Ouplementation</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Sail-Ouplementation"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Sail-Ouplementation"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/openrdf-logo.png" alt="" /></p>
+<pre><code>&lt;dependency&gt;
+   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+   &lt;artifactId&gt;blueprints-graph-sail&lt;/artifactId&gt;
+   &lt;version&gt;??&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<p><a href="http://www.openrdf.org/doc/sesame2/api/org/openrdf/sail/Sail.html">Sail</a> is an <a href="http://www.w3.org/RDF/"><span class="caps">RDF</span></a> triple/quad store interface developed by <a href="http://openrdf.org">OpenRDF</a>. Any database the implements the Sail interfaces properly is a valid <span class="caps">RDF</span> triple/quad store. A graph database is a great way to build a triple/quad store because its possible to mix indexing and graph traversals to solve the <span class="caps">RDF</span> &#x201C;pattern match&#x201D; problem. To go from <code>Graph</code> to <code>Sail</code>, simply use <code>GraphSail</code>. <code>GraphSail</code> requires an <code>IndexableGraph</code> (e.g. <code>TinkerGraph</code>, <code>Neo4jGraph</code>, <code>OrientGraph</code>). The examples below use <a class="internal present" href="TinkerGraph.html">TinkerGraph</a> and expose it as a <code>GraphSail</code> and thus, a <code>Sail</code>. While some basic examples are provided, please refer to the <a href="http://openrdf.org">OpenRDF</a> Sail documentation for a complete review of the framework.</p>
+<p><strong><span class="caps">NOTE</span> ON <span class="caps">TRANSACTIONS</span></strong>: <code>Sail</code> has its own transaction model that is different from the transaction model used by <code>TransactionalGraph</code>. <code>GraphSail</code> provides the user the flexibility of using <code>TransactionalGraph</code> transaction buffers (see <a class="internal present" href="Graph-Transactions.html">Graph Transactions</a>). If the transaction buffer is set to size 0, then the <code>Sail</code> transaction semantics are as expected. If greater than 0, then the <code>Sail</code> transaction semantics are ignored.</p>
+<h2>Basic Statement Handling</h2>
+<p>A statement in <span class="caps">RDF</span> is a triple or quad. The components of a statement are called: subject, predicate, object, and graph/context. The subject can be a <span class="caps">URI</span> or blank node. The predicate can only be a <span class="caps">URI</span>. The object can be a <span class="caps">URI</span>, blank node, or literal. Finally, the graph (or context) can be a <span class="caps">URI</span> or blank node.</p>
+<pre><code>Sail sail = new GraphSail(new TinkerGraph());
+sail.initialize();
+SailConnection sc = sail.getConnection();
+ValueFactory vf = sail.getValueFactory();
+sc.addStatement(vf.createURI("http://tinkerpop.com#1"), vf.createURI("http://tinkerpop.com#knows"), vf.createURI("http://tinkerpop.com#3"), vf.createURI("http://tinkerpop.com"));
+sc.addStatement(vf.createURI("http://tinkerpop.com#1"), vf.createURI("http://tinkerpop.com#name"), vf.createLiteral("marko"), vf.createURI("http://tinkerpop.com"));
+sc.addStatement(vf.createURI("http://tinkerpop.com#3"), vf.createURI("http://tinkerpop.com#name"), vf.createLiteral("josh"), vf.createURI("http://tinkerpop.com"));
+
+System.out.println("get statements: ?s ?p ?o ?g");
+CloseableIteration&lt;? extends Statement, SailException&gt; results = sc.getStatements(null, null, null, false);
+while(results.hasNext()) {
+    System.out.println(results.next());
+}
+
+System.out.println("\nget statements: http://tinkerpop.com#3 ?p ?o ?g");
+results = sc.getStatements(vf.createURI("http://tinkerpop.com#3"), null, null, false);
+while(results.hasNext()) {
+    System.out.println(results.next());
+}</code></pre>
+<pre><code>get statements: ?s ?p ?o ?g
+(http://tinkerpop.com#1, http://tinkerpop.com#knows, http://tinkerpop.com#3) [http://tinkerpop.com]
+(http://tinkerpop.com#3, http://tinkerpop.com#name, "josh") [http://tinkerpop.com]
+(http://tinkerpop.com#1, http://tinkerpop.com#name, "marko") [http://tinkerpop.com]
+
+get statements: http://tinkerpop.com#3 ?p ?o ?g
+(http://tinkerpop.com#3, http://tinkerpop.com#name, "josh") [http://tinkerpop.com]</code></pre>
+<h2>Using <span class="caps">SPARQL</span></h2>
+<p><a href="http://www.w3.org/TR/rdf-sparql-query/"><span class="caps">SPARQL</span></a> is the standard query language for <span class="caps">RDF</span> stores. OpenRDF provides a <span class="caps">SPARQL</span> query engine that can be used over any <code>Sail</code>. An example is provided below. Assume that the same statements from the previous example exist in the <code>GraphSail</code> below.</p>
+<pre><code>SPARQLParser parser = new SPARQLParser();
+CloseableIteration&lt;? extends BindingSet, QueryEvaluationException&gt; sparqlResults;
+String queryString = "SELECT ?x ?y WHERE { ?x &lt;http://tinkerpop.com#knows&gt; ?y }";
+ParsedQuery query = parser.parseQuery(queryString, "http://tinkerPop.com");
+
+System.out.println("\nSPARQL: " + queryString);
+sparqlResults = sc.evaluate(query.getTupleExpr(), query.getDataset(), new EmptyBindingSet(), false);
+while (sparqlResults.hasNext()) {
+    System.out.println(sparqlResults.next());
+}</code></pre>
+<pre><code>SPARQL: SELECT ?x ?y WHERE { ?x &lt;http://tinkerpop.com#knows&gt; ?y }
+[y=http://tinkerpop.com#3;x=http://tinkerpop.com#1]</code></pre>
+<h2>Moving Between Sail and Graph</h2>
+<p>Its possible to get the <code>Graph</code> that is being modeled as a <code>Sail</code> and work from the Blueprints <span class="caps">API</span> perspective. In this way, its possible to leverage the tools provided for both <code>Sail</code> and Blueprints <code>Graph</code>.</p>
+<pre><code>Graph graph = ((GraphSail) sail).getGraph();
+System.out.println();
+for (Vertex v : graph.getVertices()) {
+    System.out.println("------");
+    System.out.println(v);
+    for (String key : v.getPropertyKeys()) {
+        System.out.println(key + "=" + v.getProperty(key));
+    }
+}
+for (Edge e : graph.getEdges()) {
+System.out.println("------");
+System.out.println(e);
+for (String key : e.getPropertyKeys()) {
+    System.out.println(key + "=" + e.getProperty(key));
+}</code></pre>
+<pre><code>------
+v[2]
+value=http://tinkerpop.com#3
+kind=uri
+------
+v[1]
+value=http://tinkerpop.com#1
+kind=uri
+------
+v[0]
+value=urn:com.tinkerpop.blueprints.pgm.oupls.sail:namespaces
+------
+v[6]
+value=josh
+kind=literal
+------
+v[4]
+value=marko
+kind=literal
+------
+e[3][1-http://tinkerpop.com#knows-&gt;2]
+cp=U http://tinkerpop.com U http://tinkerpop.com#knows
+c=U http://tinkerpop.com
+p=U http://tinkerpop.com#knows
+------
+e[7][2-http://tinkerpop.com#name-&gt;6]
+cp=U http://tinkerpop.com U http://tinkerpop.com#name
+c=U http://tinkerpop.com
+p=U http://tinkerpop.com#name
+------
+e[5][1-http://tinkerpop.com#name-&gt;4]
+cp=U http://tinkerpop.com U http://tinkerpop.com#name
+c=U http://tinkerpop.com
+p=U http://tinkerpop.com#name</code></pre>
+<h2>Inferencing support</h2>
+<p>Blueprints Sail implements <a href="http://www.openrdf.org/doc/sesame2/api/org/openrdf/sail/NotifyingSail.html">NotifyingSail</a>, produces <a href="http://www.openrdf.org/doc/sesame2/api/org/openrdf/sail/inferencer/InferencerConnection.html">InferencerConnections</a>, and does all of the right things under the hood to support Sesame-based reasoning/inferencing tools such as <a href="http://www.openrdf.org/doc/sesame2/api/org/openrdf/sail/inferencer/fc/ForwardChainingRDFSInferencer.html">ForwardChainingRDFSInferencer</a>, with no extra plumbing required.  For example:</p>
+<pre><code> Sail reasoner = new ForwardChainingRDFSInferencer(new GraphSail(new TinkerGraph()));
+ reasoner.initialize();</code></pre>
+<p>How it works: a reasoner such as <code>ForwardChainingRDFSInferencer</code> is expected to listen for <span class="caps">RDF</span> statements added to or removed from the base <code>Sail</code> (here: an instance of <code>GraphSail</code>) and to manage a collection of &#x201C;inferred&#x201D; statements accordingly.  The inferred statements are stored along with the explicitly asserted <span class="caps">RDF</span> statements in the base <code>Sail</code>.  In Blueprints Sail, these statements are marked with a special property, <code>inferred</code>, which when present has the boolean value <code>true</code>, so you can see which edges &#x201C;you&#x201D; have added, and which edges the reasoner has added, when traversing the underlying Property Graph.  The following is a more detailed example:</p>
+<pre><code>Resource beijing = new URIImpl("http://example.org/things/Beijing");
+Resource city = new URIImpl("http://example.org/terms/city");
+Resource place = new URIImpl("http://example.org/terms/place");
+
+Sail reasoner = new ForwardChainingRDFSInferencer(new GraphSail(new TinkerGraph()));
+reasoner.initialize();
+
+try {
+    SailConnection c = reasoner.getConnection();
+    try {
+        c.addStatement(city, RDFS.SUBCLASSOF, place);
+        c.addStatement(beijing, RDF.TYPE, city);
+        c.commit();
+
+        CloseableIteration&lt;? extends Statement, SailException&gt; i
+                = c.getStatements(beijing, null, null, true);
+        try {
+            while (i.hasNext()) {
+                System.out.println("statement " + i.next());
+            }
+        } finally {
+            i.close();
+        }
+    } finally {
+        c.close();
+    }
+} finally {
+    reasoner.shutDown();
+}</code></pre>
+<p>Output of the example:<br /></p><pre><code>statement (http://example.org/things/Beijing, http://www.w3.org/1999/02/22-rdf-syntax-ns#type, http://www.w3.org/2000/01/rdf-schema#Resource)
+statement (http://example.org/things/Beijing, http://www.w3.org/1999/02/22-rdf-syntax-ns#type, http://example.org/terms/place)
+statement (http://example.org/things/Beijing, http://www.w3.org/1999/02/22-rdf-syntax-ns#type, http://example.org/terms/city)</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>hendrens</b>, 2012-03-10 19:23:44</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

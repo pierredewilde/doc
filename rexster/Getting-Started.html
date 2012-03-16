@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../public/css/editor/gollum.editor.js"></script>
+  <title>Getting Started</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head">
+<div><a href="../index.html">TinkerPop</a> - <a href="Home.html">Rexster</a></div>
+  <h1>Getting Started</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Getting-Started"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Getting-Started"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/dog-on-leash.png" alt="" /></p>
+<p>The Rexster distribution comes with a <a href="../gremlin/Defining-a-More-Complex-Property-Graph.html">Grateful Dead dataset</a>. The raw data is located <a href="https://github.com/tinkerpop/rexster/raw/master/data/graph-example-2.xml">here</a>. This section will describe the basics of loading up the Rexster web server and accessing some basic services.</p>
+<h1>Building and Installing Rexster</h1>
+<p>There are two ways to start working with Rexster: building the latest from source or <a href="https://github.com/tinkerpop/rexster/downloads">downloading</a> a pre-built version.  Building Rexster from the latest source code, assumes that you have <a href="http://git-scm.com/">Git</a> installed and <a href="http://maven.apache.org/">Maven</a> and can be accomplished with the following commands:</p>
+<pre><code>git clone https://github.com/tinkerpop/rexster.git
+cd rexster
+mvn clean install</code></pre>
+<h1>Starting the Rexster Web Server</h1>
+<p>There is a shell script called <code>rexster.sh</code>. When that script is evaluated at the command line with the <code>--start</code> option, it starts up the Rexster web server.</p>
+<pre><code>rexster.sh --start</code></pre>
+<p><a class="internal present" href="Rexster-Configuration.html">Rexster Configuration</a> is handled through an <span class="caps">XML</span> file.  By default, Rexster looks for a file called <code>rexster.xml</code> in the same directory as <code>rexster.sh</code>.  Please be aware sample <code>rexster.xml</code> files are provided with the standard Rexster packaging.  If that file cannot be found, Rexster tries to load <code>rexster.xml</code> as a <a href="https://github.com/tinkerpop/rexster/blob/master/src/main/resources/com/tinkerpop/rexster/rexster.xml">resource</a> packaged within Rexster itself.   It is possible to make use of different configuration through a different <span class="caps">XML</span> file by calling:</p>
+<pre><code>rexster.sh --start -c other.xml</code></pre>
+<pre><code>[INFO] WebServer - .:Welcome to Rexster:.
+[INFO] GraphConfigurationContainer - Graph emptygraph - tinkergraph[vertices:0 edges:0] loaded
+[INFO] RexsterApplicationGraph - Graph [tinkergraph] - configured with allowable namespace [tp:gremlin]
+[INFO] GraphConfigurationContainer - Graph tinkergraph - tinkergraph[vertices:6 edges:6] loaded
+[INFO] RexsterApplicationGraph - Graph [tinkergraph-readonly] - configured with allowable namespace [tp:gremlin]
+[INFO] GraphConfigurationContainer - Graph tinkergraph-readonly - (readonly)tinkergraph[vertices:6 edges:6] loaded
+[INFO] RexsterApplicationGraph - Graph [gratefulgraph] - configured with allowable namespace [tp:gremlin]
+[INFO] GraphConfigurationContainer - Graph gratefulgraph - tinkergraph[vertices:809 edges:8049] loaded
+[INFO] GraphConfigurationContainer - Graph sailgraph - sailgraph[memorystore] loaded
+[INFO] GraphConfigurationContainer - Graph orientdbsample -  not enabled and not loaded.
+[INFO] GraphConfigurationContainer - Graph neo4jsample -  not enabled and not loaded.
+[INFO] GraphConfigurationContainer - Graph dexsample -  not enabled and not loaded.
+[INFO] MapResultObjectCache - Cache constructed with a maximum size of 1000
+[INFO] WebServer - Web Server configured with com..sun..jersey..config..property..packages: com.tinkerpop.rexster
+[INFO] WebServer - No servlet initialization parameters passed for configuration: admin-server-configuration
+[INFO] WebServer - Rexster Server running on: [http://localhost:8182]
+[INFO] WebServer - Dog House Server running on: [http://localhost:8183]
+[INFO] ShutdownManager$ShutdownSocketListener - Bound shutdown socket to /127.0.0.1:8184. Starting listener thread for shutdown requests.</code></pre>
+<h1>GETing the Basics</h1>
+<p>When the web server is loaded, it is possible to get the list of of currently loaded graphs as well as other server information by accessing the base-<span class="caps">URI</span>:</p>
+<p><code>http://localhost:8182/graphs</code></p>
+<p>The result of GETing this base-<span class="caps">URI</span> should look as follows (consider using the <a href="http://jsonview.com/">JSONView</a> plugin for Firefox or Chrome for nicely formatted <span class="caps">JSON</span>)</p>
+<pre><code>{
+    "version":"*.*",
+    "name":"Rexster: A Graph Server",
+    "graphs":["tinkergraph","gratefulgraph","sailgraph","emptygraph"],
+    "queryTime":1.82123,
+    "upTime":"0[d]:00[h]:00[m]:07[s]"
+}</code></pre>
+<p>To look at the properties of an individual graph and what <a class="internal present" href="Extensions.html">Extensions</a> it has associated with it, then append the names of one of the values from the &#x201C;graphs&#x201D; array above to the base-<span class="caps">URI</span> as in:</p>
+<p><code>http://localhost:8182/graphs/tinkergraph</code></p>
+<p>and the result will look like:</p>
+<pre><code>{
+    "version": "*.*",
+    "name": "tinkergraph",
+    "graph": "tinkergraph[vertices:809 edges:8049]",
+    "read_only": false,
+    "type": "com.tinkerpop.blueprints.pgm.impls.tg.TinkerGraph",
+    "queryTime": 0.623691,
+    "upTime": "0[d]:00[h]:00[m]:24[s]"
+}</code></pre>
+<p>Reading more about the <a class="internal present" href="Basic-REST-API.html">Basic REST API</a> for Rexster will help in learning more about how general access to the graph will work.</p>
+<h1>The Dog House</h1>
+<p><a class="internal present" href="The-Dog-House.html">The Dog House</a> provides for browser-based access to some of the underlying Rexster services (basic vertex/edge browsing and <a class="internal present" href="Gremlin-Extension.html">Gremlin</a> console) and by default is available at:</p>
+<p><code>http://localhost:8182/doghouse</code></p>
+<p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-dog-house-browse.png" alt="" /></p>
+<h1>Stopping the Rexster Web Server</h1>
+<p>To shutdown the web server:</p>
+<pre><code>rexster.sh --stop</code></pre>
+<p>This will properly release resources and shutdown the server and exit.  The following will appear in the server console:</p>
+<pre><code>[INFO] ShutdownManager$ShutdownSocketHandler - Received request for shutdown
+[INFO] ShutdownManager - Calling ShutdownListener: com.tinkerpop.rexster.WebServer$1@559113f8
+[INFO] RexsterApplication - Shutting down tinkergraph - tinkergraph[vertices:6 edges:6]
+[INFO] RexsterApplication - Shutting down gratefulgraph - tinkergraph[vertices:809 edges:8049]
+[INFO] RexsterApplication - Shutting down tinkergraph-readonly - (readonly)tinkergraph[vertices:6 edges:6]
+[INFO] RexsterApplication - Shutting down sailgraph - sailgraph[memorystore]
+[INFO] RexsterApplication - Shutting down emptygraph - tinkergraph[vertices:0 edges:0]
+[INFO] ShutdownManager - ShutdownListener com.tinkerpop.rexster.WebServer$1@559113f8 complete
+[INFO] ShutdownManager - Calling ShutdownListener: ShutdownListener [bindHost=/127.0.0.1, port=8184]
+[INFO] ShutdownManager - ShutdownListener ShutdownListener [bindHost=/127.0.0.1, port=8184] complete
+[INFO] ShutdownManager$ShutdownSocketListener - Caught SocketException on shutdownSocket, assuming close() was called: java.net.SocketException: Socket closed
+[INFO] ShutdownManager - Calling ShutdownListener: JVM Shutdown Hook Remover
+[INFO] ShutdownManager - ShutdownListener JVM Shutdown Hook Remover complete</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-03-15 23:42:31</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

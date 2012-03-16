@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../public/css/editor/gollum.editor.js"></script>
+  <title>Property Graph Model</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head">
+<div><a href="../index.html">TinkerPop</a> - <a href="Home.html">Blueprints</a></div>
+  <h1>Property Graph Model</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Property-Graph-Model"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Property-Graph-Model"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/graph-example-1.jpg" height="486px" /></p>
+<p>Blueprints provides a set of interfaces for the property graph data model. An example instance is diagrammed above. In order to make a data management system &#x201C;Blueprints-enabled,&#x201D; these interfaces must be implemented. Any applications that bind to the Blueprints property graph model <span class="caps">API</span> can make use of different data management systems (i.e. plug and play graph backends).</p>
+<p>The property graph interfaces are itemized below and in the following sub-sections, their method signatures presented.</p>
+<ol><li><strong>graph</strong>: an object that contains vertices and edges.
+	<ul><li><strong>transactional graph</strong>: a graph that supports transactions</li>
+		<li><strong>indexable graph</strong>: a graph that supports indices</li>
+	</ul></li>
+	<li><strong>element</strong>: an object that maintains properties (i.e. key/value pair map).
+	<ul><li><strong>vertex</strong>: an object that is connected to other objects by edges.</li>
+		<li><strong>edge</strong>: an object that connects two vertices.</li>
+	</ul></li>
+	<li><strong>index</strong>: an object that maintains a map structure of key/value pairs to elements.
+	<ul><li><strong>automatic index</strong>: an index that manages itself as elements are updated.</li>
+	</ul></li>
+</ol><p>In order to aid in the understanding of the various methods defined below, the following diagram identifies the names of the different components of a graph.</p>
+<p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/property-graph-model.jpg" alt="" /></p>
+<h2>Graph</h2>
+<pre><code>public Vertex addVertex(Object id);
+public Vertex getVertex(Object id);
+public Iterable&lt;Vertex&gt; getVertices();
+public void removeVertex(Vertex vertex);
+public Edge addEdge(Object id, Vertex outVertex, Vertex inVertex, String label);
+public Iterable&lt;Edge&gt; getEdges();
+public void removeEdge(Edge edge);
+public void clear();
+public void shutdown();</code></pre>
+<h3>TransactionalGraph (extends Graph)</h3>
+<pre><code>public void startTransaction();
+public void stopTransaction(Conclusion conclusion);
+public void setMaxBufferSize(int bufferSize);
+public int getMaxBufferSize();
+public int getCurrentBufferSize();</code></pre>
+<h3>IndexableGraph (extends Graph)</h3>
+<pre><code>public &lt;T extends Element&gt; Index&lt;T&gt; createManualIndex(String indexName, Class&lt;T&gt; indexClass);
+public &lt;T extends Element&gt; AutomaticIndex&lt;T&gt; createAutomaticIndex(String name, Class&lt;T&gt; indexClass);
+public &lt;T extends Element&gt; Index&lt;T&gt; getIndex(String indexName, Class&lt;T&gt; indexClass);
+public Iterable&lt;Index&gt; getIndices();
+public void dropIndex(String indexName);</code></pre>
+<h2>Element</h2>
+<pre><code>public Object getProperty(String key);
+public Set&lt;String&gt; getPropertyKeys();
+public void setProperty(String key, Object value);
+public Object getId();</code></pre>
+<h3>Vertex (extends Element)</h3>
+<pre><code>public Iterable&lt;Edge&gt; getOutEdges(String... labels);
+public Iterable&lt;Edge&gt; getInEdges(String... labels);</code></pre>
+<h3>Edge (extends Element)</h3>
+<pre><code>public Vertex getOutVertex();
+public Vertex getInVertex();
+public String getLabel();</code></pre>
+<h2>Index [T extends Element]</h2>
+<pre><code>public long count(String key, Object value);
+public String getIndexName();
+public Class&lt;T&gt; getIndexClass();
+public Type getIndexType();
+public void put(String key, Object value, T element);
+public Iterable&lt;T&gt; get(String key, Object value);
+public void remove(String key, Object value, T element);</code></pre>
+<h3>AutomaticIndex (extends Index)</h3>
+<pre><code>public Set&lt;String&gt; getAutoIndexKeys();</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>hendrens</b>, 2012-03-10 19:23:44</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

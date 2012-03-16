@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../public/css/editor/gollum.editor.js"></script>
+  <title>Finding duplicated edges</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head">
+<div><a href="../index.html">TinkerPop</a> - <a href="Home.html">Gremlin</a></div>
+  <h1>Finding duplicated edges</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Finding-duplicated-edges"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Finding-duplicated-edges"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>Strictly speaking, you cannot have duplicated egdes with the same id.<br />
+This example finds edges with same <code>outV/inV/label</code> properties.</p>
+<p>Here is an example to create a duplicated edge:</p>
+<pre><code>gremlin&gt; g = TinkerGraphFactory.createTinkerGraph()
+==&gt;tinkergraph[vertices:6 edges:6]
+gremlin&gt; g.v(1).outE('created')
+==&gt;e[9][1-created-&gt;3]
+gremlin&gt; g.addEdge(null, g.v(1), g.v(3), "created", g.e(9).map()) // see note
+==&gt;e[0][1-created-&gt;3]
+gremlin&gt; g.v(1).outE('created')
+==&gt;e[0][1-created-&gt;3]
+==&gt;e[9][1-created-&gt;3]
+gremlin&gt; ElementHelper.haveEqualProperties(g.e(9), g.e(0))
+==&gt;true</code></pre>
+<p>note: another way to copy properties between edges is <code>ElementHelper.copyProperties(g.e(9), g.e(0))</code></p>
+<p>Q: how to detect such duplicated edges?<br />
+A: check <code>outV/inV/label</code> properties</p>
+<p>Assuming <code>e</code> is the edge to check:</p>
+<pre><code>gremlin&gt; e = g.e(9)
+==&gt;e[9][1-created-&gt;3]</code></pre>
+<p>Here is the magicheck:</p>
+<pre><code>gremlin&gt; e.outV.outE(e.label).filter{ElementHelper.haveEqualProperties(e,it)}.as('e').inV.filter{it==e.inV.next()}.back('e').except([e])
+==&gt;e[0][1-created-&gt;3]
+</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-03-15 23:06:57</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>
