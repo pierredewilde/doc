@@ -1,4 +1,4 @@
-[[http://tinkerpop.com/images/tinkerpop-splash.png|width=220px]]
+!http://tinkerpop.com/images/tinkerpop-splash.png!
 
 h1. TinkerPop Documentation
 
