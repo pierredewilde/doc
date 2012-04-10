@@ -59,7 +59,7 @@
 <pre><code>Graph graph = new Neo4jGraph("/tmp/neo4j");</code></pre>
 <p><a href="http://neotechnology.com">Neo Technology</a> are the developers of the <a href="http://neo4j.org">Neo4j graph database</a>. Neo4j natively supports the property graph data model. However, there are a few peculiarities in Neo4j that make it not completely faithful to the <a class="internal present" href="Property-Graph-Model.html">property graph model</a> as specified by Blueprints. These are itemized below.</p>
 <ol><li><strong>No user defined element identifiers</strong>: Neo4j is the gatekeeper and creator of vertex and edge identifiers. Thus, when creating a new vertex or edge, the provided object identifier is ignored.</li>
-	<li><strong>Only primitive property values</strong>: Neo4j requires that the value objects in the property map of an element be Java primitives, <code>java.lang.String</code>s, or arrays of primitives and <code>java.lang.String</code>s.</li>
+	<li><strong>Only primitive property values</strong>: Neo4j requires that the value objects in the property map of an element be Java primitives, <code>java.lang.String</code> values, or arrays of primitives and <code>java.lang.String</code> values.  <code>Neo4jElement</code> will also accept a <code>Collection</code> of like primitives or <code>java.lang.String</code> values and will convert those to the appropriate array type for storage in Neo4j.</li>
 </ol><h2>Indices with Neo4jGraph</h2>
 <p>It is possible to parameterize the indices created through Blueprints. Learn more about the types of indices supported by Neo4j at <a href="http://docs.neo4j.org/chunked/milestone/indexing-create-advanced.html">this location</a>.</p>
 <pre><code>graph.createAutomaticIndex("myIdx", Vertex.class, null, new Parameter("analyzer", LowerCaseKeywordAnalyzer.class.getName()));
@@ -73,7 +73,7 @@ assertEquals(itty.next(), a);</code></pre>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>hendrens</b>, 2012-03-10 19:23:44</p>
+  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-04-06 22:42:20</p>
 </div>
 </div>
 

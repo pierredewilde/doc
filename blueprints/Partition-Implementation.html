@@ -51,6 +51,11 @@
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
       <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/partition-graph.png" alt="" /></p>
+<pre><code>&lt;dependency&gt;
+   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
+   &lt;version&gt;??&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
 <p><code>PartitionGraph</code> is a graph wrapper that partitions the elements (vertices/edges) of a graph into <code>String</code> named partitions (i.e. buckets, subgraphs, etc.). The idea behind <code>PartitionGraph</code> is presented in the image above where each element is in a single partition (represented by its color). Partitions can be read from, written to, and linked/joined by edges that span one or two partitions (e.g. a tail vertex in one partition and a head vertex in another).</p>
 <p><code>PartitionGraph</code> is simple to use. There are three primary variables in <code>PartitionGraph</code>:</p>
 <ol><li><strong>Partition Key</strong>: The property key that denotes a <code>String</code> value representing a partition.</li>
@@ -62,10 +67,10 @@ Vertex v1 = graph.addVertex(null); // v1 has a property of {_partition:"a"}
 graph.setWritePartition("b");
 Vertex v2 = graph.addVertex(null); // v2 has a property of {_partition:"b"}
 graph.getVertices(); // only v1 is in the iterator
-graph.addReadGraph("b"); 
+graph.addReadPartition("b"); 
 graph.getVertices() // both v1 and v2 are in the iterator
-graph.removeReadGraph("a");
-graph.removeReadGraph("b"); 
+graph.removeReadPartition("a");
+graph.removeReadPartition("b"); 
 graph.getVertices(); // no vertices are in the iterator
 
 graph.setWritePartition("c");
@@ -78,7 +83,7 @@ graph.getEdges(); // e1 is in the iterator</code></pre>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>hendrens</b>, 2012-03-10 19:23:44</p>
+  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-04-06 22:42:20</p>
 </div>
 </div>
 
