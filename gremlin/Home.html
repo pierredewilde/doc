@@ -51,7 +51,7 @@
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
       <p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-logo.png" height="143px" /><a href="https://github.com/tinkerpop/gremlin/downloads"><span class="float-right"><span><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/tinkerpop-download.png" /></span></span></a></p>
-<p>Gremlin is a graph traversal language. The documentation herein will provide all the information necessary to understand how to use Gremlin for graph query, analysis, and manipulation. Gremlin works over those graph databases/frameworks that implement the <a href="../blueprints/Home.html">Blueprints</a> property graph data model. Examples include <a href="../blueprints/TinkerGraph.html">TinkerGraph</a>, <a href="http://neo4j.org">Neo4j</a>, <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a>, <a href="http://www.sparsity-technologies.com/dex"><span class="caps">DEX</span></a>, <a href="http://www.infinitegraph.com/">InfiniteGraph</a>, <a href="../rexster/Home.html">Rexster</a>, and <a href="http://www.openrdf.org">Sail <span class="caps">RDF</span> Stores</a>. Gremlin is a style of graph traversal that can be natively used in various <a href="http://en.wikipedia.org/wiki/List_of_JVM_languages"><span class="caps">JVM</span> languages</a>. Currently, Gremlin provides native support for Java, <a href="http://groovy.codehaus.org/">Groovy</a>, and <a href="http://www.scala-lang.org/">Scala</a>. Except where otherwise stated, the documentation herein is respective of the Groovy implementation (minor syntactic tweaks are required to map the ideas over to other <span class="caps">JVM</span> implementations.)</p>
+<p>Gremlin is a graph traversal language. The documentation herein will provide all the information necessary to understand how to use Gremlin for graph query, analysis, and manipulation. Gremlin works over those graph databases/frameworks that implement the <a href="../blueprints/Home.html">Blueprints</a> property graph data model. Examples include <a href="../blueprints/TinkerGraph.html">TinkerGraph</a>, <a href="http://neo4j.org">Neo4j</a>, <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a>, <a href="http://www.sparsity-technologies.com/dex"><span class="caps">DEX</span></a>, <a href="http://www.infinitegraph.com/">InfiniteGraph</a>, <a href="../rexster/Home.html">Rexster</a>, and <a href="http://www.openrdf.org">Sail <span class="caps">RDF</span> Stores</a>. Gremlin is a style of graph traversal that can be natively used in various <a href="http://en.wikipedia.org/wiki/List_of_JVM_languages"><span class="caps">JVM</span> languages</a>. This distribution of Gremlin provides native support for Java and <a href="http://groovy.codehaus.org/">Groovy</a>. Except where otherwise stated, the documentation herein is respective of the Groovy implementation (minor syntactic tweaks are required to map the ideas over to other <span class="caps">JVM</span> implementations).</p>
 <p>Please join the Gremlin users group at <a href="http://groups.google.com/group/gremlin-users">http://groups.google.com/group/gremlin-users</a> for all <a href="../index.html">TinkerPop</a> related discussions. Finally, if you are a Gremlin user, please add to the <a class="internal present" href="Gremlin-in-the-Wild.html">Gremlin in the Wild</a> wiki page with your specific Gremlin uses cases. <sup class="footnote"><a href="#fn1">1</a></sup></p>
 <pre><code>g = new Neo4jGraph('/tmp/neo4j')
 
@@ -84,7 +84,7 @@ m.sort{a,b -&gt; a.value &lt;=&gt; b.value}</code></pre><br /><a href="http://wi
 			<ul><li><a class="internal present" href="Backtrack-Pattern.html">Backtrack Pattern</a></li>
 				<li><a class="internal present" href="Except-Retain-Pattern.html">Except/Retain Pattern</a></li>
 				<li><a class="internal present" href="Flow-Rank-Pattern.html">Flow Rank Pattern</a></li>
-				<li><a class="internal present" href="Paths-Pattern.html">Paths Pattern</a></li>
+				<li><a class="internal present" href="Path-Pattern.html">Path Pattern</a></li>
 				<li><a class="internal present" href="Loop-Pattern.html">Loop Pattern</a></li>
 				<li><a class="internal present" href="Split-Merge-Pattern.html">Split/Merge Pattern</a></li>
 				<li><a class="internal present" href="MapReduce-Pattern.html">MapReduce Pattern</a></li>
@@ -107,9 +107,6 @@ m.sort{a,b -&gt; a.value &lt;=&gt; b.value}</code></pre><br /><a href="http://wi
 			<ul><li><a class="internal present" href="Using-Gremlin-through-Groovy.html">Using Gremlin through Groovy</a></li>
 				<li><a class="internal present" href="Gremlin-Groovy-Path-Optimizations.html">Gremlin Groovy Path Optimizations</a></li>
 			</ul></li>
-		<li>Gremlin Scala
-			<ul><li><a class="internal present" href="Using-Gremlin-through-Scala.html">Using Gremlin through Scala</a></li>
-			</ul></li>
 	</ul></li>
 	<li>Conclusion
 	<ul><li><a class="internal present" href="Troubleshooting.html">Troubleshooting</a></li>
@@ -117,7 +114,7 @@ m.sort{a,b -&gt; a.value &lt;=&gt; b.value}</code></pre><br /><a href="http://wi
 		<li><a class="internal present" href="Release-Notes.html">Release Notes</a></li>
 	</ul></li>
 </ul><hr /><p><a class="internal present" href="Gremlin-Cookbook.html">Gremlin Cookbook</a> (User Contributed Recipes)</p>
-<hr /><pre><code>&lt;!-- * can be java, groovy, scala, or test --&gt;
+<hr /><pre><code>&lt;!-- * can be java, groovy, or test --&gt;
 &lt;dependency&gt;
    &lt;groupId&gt;com.tinkerpop.gremlin&lt;/groupId&gt;
    &lt;artifactId&gt;gremlin-*&lt;/artifactId&gt;
@@ -132,7 +129,7 @@ m.sort{a,b -&gt; a.value &lt;=&gt; b.value}</code></pre><br /><a href="http://wi
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-04-02 21:46:00</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-03 23:55:47</p>
 </div>
 </div>
 

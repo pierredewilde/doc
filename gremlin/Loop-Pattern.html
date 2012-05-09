@@ -92,7 +92,18 @@ gremlin&gt; g.v(89).as('x').outE.inV.loop('x'){it.loops &lt; 3}.path
 <ol><li><code>it.object</code>: the current object of the traverser.</li>
 	<li><code>it.path</code>: the current path of the traverser.</li>
 	<li><code>it.loops</code>: the number of times the traverser has looped through the loop section.</li>
-</ol><h2>Using an Emit Closure</h2>
+</ol><p><strong><span class="caps">NOTE</span></strong>: If you are using <code>it.path</code> in the while/emit closure, be sure that the pipeline has had its path functionality enabled.</p>
+<pre><code>gremlin&gt; g.v(89).out.loop(1){it.loops &lt; 3}{it.path.contains(g.v(12))}
+Cannot invoke method contains() on null object
+Display stack trace? [yN] 
+gremlin&gt; g.v(89).out.loop(1){it.loops &lt; 3}{it.path.contains(g.v(12))}.enablePath
+==&gt;v[19]
+==&gt;v[27]
+==&gt;v[130]
+==&gt;v[49]
+==&gt;v[252]
+...</code></pre>
+<h2>Using an Emit Closure</h2>
 <p>The <code>loop</code> step can be updated with a second closure called the &#x201C;emit closure.&#x201D; This boolean-based closure will determine wether the current object in the loop structure is emitted or not. As such, it is possible to emit intermediate objects, not simply those at the end of the loop.</p>
 <pre><code>gremlin&gt; g.v(89).out.loop(1){it.loops &lt; 4}.count()      
 ==&gt;70307
@@ -115,7 +126,7 @@ gremlin&gt; println g.v(89).out.loop(1){it.loops &lt; 3}.path
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-04-02 21:46:00</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-03 23:55:47</p>
 </div>
 </div>
 

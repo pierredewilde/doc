@@ -63,6 +63,15 @@
 <p>Next, lets set the root vertex to a Linked Data <span class="caps">URI</span>. We will use <a href="http://www.wiwiss.fu-berlin.de/en/institute/pwo/bizer/">Chris Bizer</a> (one of the main advocates of Linked Data). One of his URIs is <code>http://data.semanticweb.org/person/christian-bizer</code>.</p>
 <pre><code>gremlin&gt; v = g.v('http://data.semanticweb.org/person/christian-bizer')
 ==&gt;v[http://data.semanticweb.org/person/christian-bizer]</code></pre>
+<p>Next, we will add some default namespaces: <code>rdf</code>, <code>rdfs</code>, <code>owl</code>, <code>xsd</code> and <code>foaf</code>.</p>
+<pre><code>gremlin&gt; g.addDefaultNamespaces()
+==&gt;null
+gremlin&gt; g.getNamespaces()
+==&gt;rdfs=http://www.w3.org/2000/01/rdf-schema#
+==&gt;foaf=http://xmlns.com/foaf/0.1/
+==&gt;xsd=http://www.w3.org/2001/XMLSchema#
+==&gt;owl=http://www.w3.org/2002/07/owl#
+==&gt;rdf=http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></pre>
 <p>Now lets locate some of the articles that Bizer has written.</p>
 <pre><code>gremlin&gt; v.out('foaf:made')  
 ==&gt;v[http://data.semanticweb.org/conference/iswc-aswc/2007/tracks/in-use/papers/715]
@@ -227,7 +236,7 @@ v.outE.filter{labels.contains(it.label)}.random(0.5).inV.groupCount(m).loop(4){i
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-04-02 21:46:00</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-03 23:55:47</p>
 </div>
 </div>
 
