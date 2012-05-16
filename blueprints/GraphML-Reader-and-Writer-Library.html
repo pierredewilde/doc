@@ -124,8 +124,7 @@
 <pre><code>Graph graph = ...
 InputStream in = ...
 
-GraphMLReader reader = new GraphMLReader(graph);
-reader.inputGraph(in);</code></pre>
+GraphMLReader.inputGraph(graph, in);</code></pre>
 <p>Note that <code>inputGraph</code> is also overloaded with a &#x201C;buffer size&#x201D; parameter.  Several setter methods are provided for customizing the property keys which <code>GraphMLReader</code> uses to map the GraphML data into the Property Graphs model.  If used, these should be called before <code>inputGraph</code>, e.g.</p>
 <pre><code>GraphMLReader reader = new GraphMLReader(graph);
 reader.setVertexIdKey("_id");
@@ -136,8 +135,7 @@ reader.inputGraph(in);</code></pre>
 <pre><code>Graph graph = ...
 OutputStream out = ...
 
-GraphMLWriter writer = new GraphMLWriter(graph);
-writer.outputGraph(out);</code></pre>
+GraphMLWriter.outputGraph(graph, out);</code></pre>
 <p>If you have a large graph and you know the key and value type of all vertex and/or edge properties used in your graph, you can speed up <code>outputGraph</code> by first specifying those properties, e.g.</p>
 <pre><code>Map&lt;String, String&gt; vertexKeyTypes = new HashMap&lt;String, String&gt;();
 vertexKeyTypes.put("age", GraphMLTokens.INT);
@@ -216,7 +214,7 @@ writer.outputGraph(out);</code></pre>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
+  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-16 22:59:49</p>
 </div>
 </div>
 

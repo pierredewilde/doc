@@ -95,32 +95,32 @@
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> remove a vertex <code>X</code> related to the vertex </td>
 		<td> <code>@Adjacency(label="X", direction=Direction.OUT)</code> </td>
-	</tr><tr><td> <code>@Incident</code> </td>
+	</tr><tr><td> <code>@Incidence</code> </td>
 		<td> <code>get</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> get the edges <code>X</code> related to the vertex </td>
-		<td> <code>@Incident(label="X", direction=Direction.OUT)</code> </td>
-	</tr><tr><td> <code>@Incident</code> </td>
+		<td> <code>@Incidence(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Incidence</code> </td>
 		<td> <code>add</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> add an edge <code>X</code> related to the vertex </td>
-		<td> <code>@Incident(label="X", direction=Direction.OUT)</code> </td>
-	</tr><tr><td> <code>@Incident</code> </td>
+		<td> <code>@Incidence(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Incidence</code> </td>
 		<td> <code>remove</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> remove an edge <code>X</code> related to the vertex </td>
-		<td> <code>@Incident(label="X", direction=Direction.OUT)</code> </td>
+		<td> <code>@Incidence(label="X", direction=Direction.OUT)</code> </td>
 	</tr><tr><td> <code>@Domain</code> </td>
 		<td> <code>get</code> </td>
 		<td> none </td>
-		<td> get the domain of the relation (i.e the source) </td>
+		<td> get the domain of the adjacency (i.e the source) </td>
 		<td> <code>@Domain</code> </td>
 	</tr><tr><td> <code>@Range</code> </td>
 		<td> <code>get</code> </td>
 		<td> none </td>
-		<td> get the range of the relation (i.e. the target) </td>
+		<td> get the range of the adjacency (i.e. the target) </td>
 		<td> <code>@Range</code> </td>
-	</tr></table><p>Note that &#x201C;get&#x201D; and &#x201C;set&#x201D; methods for <code>@Relations</code> can be either single-valued or collection-valued.  For example:</p>
+	</tr></table><p>Note that &#x201C;get&#x201D; and &#x201C;set&#x201D; methods for <code>@Adjacency</code> can be either single-valued or collection-valued.  For example:</p>
 <pre><code>public interface Person {
     @Adjacency(label = "spouse")
     Person getSpouse();
@@ -153,7 +153,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 16:15:50</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 20:26:04</p>
 </div>
 </div>
 

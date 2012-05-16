@@ -55,16 +55,15 @@
 <ul><li>&#x201C;Rank my friends friends by how many friends we share in common.&#x201D;</li>
 	<li>&#x201C;Rank items by how many people, who like the same things I like, like them.&#x201D;</li>
 </ul><pre><code>gremlin&gt; software = []
-gremlin&gt; g.idx(T.v)[[lang:'java']].fill(software)
-==&gt;true
+gremlin&gt; g.V('lang','java').fill(software)
+==&gt;v[3]
+==&gt;v[5]
 gremlin&gt; software                                  
 ==&gt;v[3]
 ==&gt;v[5]</code></pre>
 <p>Vertices <code>v[3]</code> and <code>v[5]</code> are software projects. Lets determine who is on the most software projects. In other words, lets traverse out of these vertices and see which developer vertices get the most flow.</p>
 <pre><code>gremlin&gt; software._().in('created').name.groupCount.cap  
-==&gt;marko=1
-==&gt;peter=1
-==&gt;josh=2</code></pre>
+==&gt;{marko=1, peter=1, josh=2}</code></pre>
 <p>Josh received the most traversals through him. The <code>groupCount</code> step maintains an internal <code>Map&lt;Object,Number&gt;</code>. The <code>cap</code> step is used to &#x201C;cap&#x201D; <code>groupCount</code> and have it emit its internal map, not the elements that flow through it. The following example better explains &#x201C;capping&#x201D; by demonstrating what happens when its not used.</p>
 <pre><code>gremlin&gt; m = [:]
 gremlin&gt; software._().in('created').name.groupCount(m)
@@ -105,18 +104,18 @@ gremlin&gt; println g.v(12).out.groupCount(m){it.name}.loop(2){c++ &lt; 1000}
 ==&gt;null</code></pre>
 <p>Finally, you can sort your rankings and, for example, get the top 5 results.</p>
 <pre><code>gremlin&gt; m.sort{a,b -&gt; b.value &lt;=&gt; a.value}[0..4]
-==&gt;PLAYING IN THE BAND=586
-==&gt;ME AND MY UNCLE=557
-==&gt;JACK STRAW=534
-==&gt;CHINA CAT SUNFLOWER=533
-==&gt;EL PASO=524</code></pre>
+==&gt;PLAYING IN THE BAND=587
+==&gt;ME AND MY UNCLE=570
+==&gt;JACK STRAW=540
+==&gt;EL PASO=532
+==&gt;RAMBLE ON ROSE=527</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 19:26:52</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
 </div>
 </div>
 

@@ -81,7 +81,7 @@ gremlin&gt; t
 ==&gt;[x:josh, y:lop]</code></pre>
 <p>In the above Gremlin snippets, we found all the people that Marko knows who have created a product. Specifically, Marko knows Josh and Josh has created both <a href="http://ripple.fortytwo.net/">Ripple</a> and <a href="http://xmpp.org/extensions/inbox/lop.html">LoP</a>.</p>
 <p>For those familiar with <a href="../pipes/Home.html">Pipes</a>, <code>TablePipe</code> is a <code>SideEffectPipe</code> and as such, can be &#x201C;capped.&#x201D;</p>
-<pre><code>gremlin&gt; g.v(1).out('knows').as('x').out('created').as('y').table(new Table()).cap
+<pre><code>gremlin&gt; g.v(1).out('knows').as('x').out('created').as('y').table(new Table()).cap.next()
 ==&gt;[x:v[4], y:v[5]]
 ==&gt;[x:v[4], y:v[3]]</code></pre>
 <h2>Recursive Pattern Matching</h2>
@@ -104,7 +104,11 @@ gremlin&gt; t.apply{it.age}{it.name}
 ==&gt;[29, lop]</code></pre>
 <h2>Table Methods</h2>
 <p>There are numerous methods that are offered by <code>Table</code>. Here are some examples of its use:</p>
-<pre><code>gremlin&gt; t
+<pre><code>gremlin&gt; t = new Table()   
+gremlin&gt; g.v(1).out('knows').as('x').out('created').as('y').table(t){it.name}{it.name}
+==&gt;v[5]
+==&gt;v[3]
+gremlin&gt; t
 ==&gt;[x:josh, y:ripple]
 ==&gt;[x:josh, y:lop]
 gremlin&gt; t.get(0,0)
@@ -121,22 +125,19 @@ gremlin&gt; t.getRow(1).getColumn('y')
 ==&gt;lop
 gremlin&gt; t.getRow(1).getColumn(1)  
 ==&gt;lop
-gremlin&gt; t.sort{it[1]}
+gremlin&gt; t.sort()
 ==&gt;[x:josh, y:lop]
 ==&gt;[x:josh, y:ripple]
-gremlin&gt; t.sort{it[1].length()}
-==&gt;[x:josh, y:lop]
+gremlin&gt; t.sort{a,b -&gt; b[1].length() &lt;=&gt; a[1].length()}
 ==&gt;[x:josh, y:ripple]
-gremlin&gt; t.sort{it.getColumn('y')}
-==&gt;[x:josh, y:lop]
-==&gt;[x:josh, y:ripple]</code></pre>
+==&gt;[x:josh, y:lop]</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 19:26:52</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
 </div>
 </div>
 

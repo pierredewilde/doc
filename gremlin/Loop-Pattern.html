@@ -51,41 +51,39 @@
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
       <p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-kilt.png" /></p>
-<p>Looping is essential for traversing to an arbitrary depth. The <code>loop</code> step allows you to loop over a particular set of steps in the pipeline. For the examples to follow, the Grateful Dead graph discussed in <a class="internal present" href="Defining-a-More-Complex-Property-Graph.html">Defining a More Complex Property Graph</a> is used.</p>
+<p>Looping is essential for traversing to an arbitrary depth. The <code>loop</code> step allows you to loop over a particular set of steps in the pipeline. For the examples to follow, the Grateful Dead graph discussed in <a class="internal present" href="Defining-a-More-Complex-Property-Graph.html">Defining a More Complex Property Graph</a> is used. Most of the examples in this section make use of <code>GremlinPipeline.optimize(boolean)</code>. Please refer to <a class="internal present" href="Traversal-Optimization.html">Traversal Optimization</a> for the rationale behind this method.</p>
 <pre><code>g = new TinkerGraph()
 GraphMLReader.inputGraph(g, new FileInputStream('data/graph-example-2.xml'))</code></pre>
 <p>You can create an explicit pipeline to walk a particular path through the graph (<code>outE.inV</code>).</p>
-<pre><code>gremlin&gt; g.v(89).outE.inV.path
+<pre><code>gremlin&gt; g.v(89).optimize(false).outE.inV.path
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83]]
 ==&gt;[v[89], e[7022][89-followed_by-&gt;21], v[21]]
 ==&gt;[v[89], e[7023][89-followed_by-&gt;206], v[206]]
 ==&gt;[v[89], e[7006][89-followed_by-&gt;127], v[127]]
 ...</code></pre>
 <p>You can also loop for an arbitrary depth (i.e. any arbitrary number of loops through the looped section of the pipeline). In the example below, the <code>loop</code> step is used. The single integer argument to <code>loop</code> states how many steps back to loop over (i.e. <code>outE.inV</code>). The provided closure says to continue to loop <strong>while</strong> the number of loops that have occurred is less than 3. Thus, what is emitted from <code>loop</code> is the vertices 2 steps away from vertex 89 (Dark Star). Finally, the <code>path</code> step is used to emit the paths of length 2 emanating from vertex 89.</p>
-<pre><code>                   | 2 back   |
-gremlin&gt; g.v(89).outE.inV.loop(2){it.loops &lt; 3}.path
+<pre><code>gremlin&gt; g.v(89).optimize(false).outE.inV.loop(2){it.loops &lt; 3}.path
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1411][83-followed_by-&gt;13], v[13]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1410][83-followed_by-&gt;12], v[12]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1415][83-followed_by-&gt;114], v[114]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1414][83-followed_by-&gt;15], v[15]]
 ...</code></pre>
 <p>Feel free to use <code>as</code> to label the loop point.</p>
-<pre><code>                          | step x     |
-gremlin&gt; g.v(89).as('x').outE.inV.loop('x'){it.loops &lt; 3}.path
+<pre><code>gremlin&gt; g.v(89).optimize(false).as('x').outE.inV.loop('x'){it.loops &lt; 3}.path
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1411][83-followed_by-&gt;13], v[13]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1410][83-followed_by-&gt;12], v[12]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1415][83-followed_by-&gt;114], v[114]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1414][83-followed_by-&gt;15], v[15]]
 ...</code></pre>
 <p>Note the the expression above is equivalent to the &#x201C;unrolled&#x201D; version below.</p>
-<pre><code>gremlin&gt; g.v(89).outE.inV.outE.inV.path
+<pre><code>gremlin&gt; g.v(89).optimize(false).outE.inV.outE.inV.path
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1411][83-followed_by-&gt;13], v[13]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1410][83-followed_by-&gt;12], v[12]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1415][83-followed_by-&gt;114], v[114]]
 ==&gt;[v[89], e[7021][89-followed_by-&gt;83], v[83], e[1414][83-followed_by-&gt;15], v[15]]
 ...</code></pre>
 <p>In fact:</p>
-<pre><code>gremlin&gt; g.v(89).outE.inV.loop(2){it.loops &lt; 3} == g.v(89).outE.inV.outE.inV            
+<pre><code>gremlin&gt; g.v(89).outE.inV.loop(1){it.loops &lt; 3} == g.v(89).outE.inV.outE.inV            
 ==&gt;true</code></pre>
 <h2>Loop Bundles and their Metadata</h2>
 <p>The <code>it</code> component of the <code>loop</code> step closure has three properties that are accessible. These properties can be used to reason about when to break out of the loop.</p>
@@ -112,13 +110,13 @@ gremlin&gt; g.v(89).out.loop(1){it.loops &lt; 4}{true}.count()
 gremlin&gt; g.v(89).out.loop(1){it.loops &lt; 4}{it.object.id == '89'}.count()
 ==&gt;582</code></pre>
 <p>Finally, use <code>toString()</code> to see how <code>loop</code> wraps a section of the pipeline.</p>
-<pre><code>gremlin&gt; println g.v(89).outE.inV.path
+<pre><code>gremlin&gt; println g.v(89).optimize(false).outE.inV.path
 [StartPipe, OutEdgesPipe, InVertexPipe, PathPipe]
 ==&gt;null
-gremlin&gt; println g.v(89).outE.inV.loop(2){it.loops &lt; 3}.path
+gremlin&gt; println g.v(89).optimize(false).outE.inV.loop(2){it.loops &lt; 3}.path
 [StartPipe, LoopPipe([OutEdgesPipe, InVertexPipe]), PathPipe]
 ==&gt;null
-gremlin&gt; println g.v(89).out.loop(1){it.loops &lt; 3}.path  
+gremlin&gt; println g.v(89).optimize(false).out.loop(1){it.loops &lt; 3}.path  
 [StartPipe, LoopPipe([OutPipe]), PathPipe]</code></pre>
     </div>
   </div>
@@ -126,7 +124,7 @@ gremlin&gt; println g.v(89).out.loop(1){it.loops &lt; 3}.path
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 19:26:52</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
 </div>
 </div>
 

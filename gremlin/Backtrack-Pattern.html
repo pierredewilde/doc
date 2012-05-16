@@ -55,8 +55,8 @@
 <ul><li>&#x201C;What is the age of my friends who have friends who are older than 30 years old?&#x201D;</li>
 	<li>&#x201C;What other products have my friends purchased who have also purchased a product of type X?&#x201D;</li>
 </ul><pre><code>g = TinkerGraphFactory.createTinkerGraph()</code></pre>
-<p>The query below says, in plain English: &#x201C;What are the ages of the people that know people that are 30+ years old?&#x201D; The call to <code>back(3)</code> refers to the elements 3 steps ago that have paths up to the <code>back(3)</code> step (i.e. back to the <code>V</code> step). In the example below, <code>back(3)</code> &#x201C;wraps&#x201D; <code>outE('knows').inV.filter{it.age &gt; 30}</code>.</p>
-<pre><code>gremlin&gt; g.V.outE('knows').inV.filter{it.age &gt; 30}.back(3).age
+<p>The query below says, in plain English: &#x201C;What are the ages of the people that know people that are 30+ years old?&#x201D; The call to <code>back(2)</code> refers to the elements 2 steps ago that have paths up to the <code>back(2)</code> step (i.e. back to the <code>V</code> step). In the example below, <code>back(2)</code> &#x201C;wraps&#x201D; <code>out('knows').filter{it.age &gt; 30}</code>.</p>
+<pre><code>gremlin&gt; g.V.out('knows').filter{it.age &gt; 30}.back(2).age
 ==&gt;29
 gremlin&gt; g.V.as('x').outE('knows').inV.filter{it.age &gt; 30}.back('x').age
 ==&gt;29</code></pre>
@@ -65,12 +65,12 @@ gremlin&gt; g.V.as('x').outE('knows').inV.filter{it.age &gt; 30}.back('x').age
 g.loadGraphML('data/graph-example-2.xml')</code></pre>
 <p>The example query below states the following:</p>
 <ul><li>get the song with id <code>89</code> (Dark Star).</li>
-	<li>get all the songs that follow Dark Star in concert.</li>
-	<li>get the singers of those songs.</li>
-	<li>filter to only those songs that are sung by Jerry Garcia.</li>
-	<li>go back 4 steps to yield those songs that follow Dark Star and are sung by Jerry Garcia.</li>
+	<li>get all the songs that follow Dark Star in concert. (<strong>A</strong>)</li>
+	<li>get the singers of those songs. (<strong>B</strong>)</li>
+	<li>filter to only those songs that are sung by Jerry Garcia. (<strong>C</strong>)</li>
+	<li>go back 2 steps to yield those songs that follow Dark Star and are sung by Jerry Garcia. (<strong>D</strong>)</li>
 	<li>get the names of those songs that follow Dark Star and are sung by Jerry Garcia.</li>
-</ul><pre><code>gremlin&gt; g.v(89).outE('followed_by').inV.outE('sung_by').inV.has('name','Garcia').back(3).name
+</ul><pre><code>gremlin&gt; g.v(89).out('followed_by').out('sung_by').has('name','Garcia').back(2).name
 ==&gt;EYES OF THE WORLD
 ==&gt;SING ME BACK HOME
 ==&gt;MORNING DEW
@@ -86,16 +86,16 @@ g.loadGraphML('data/graph-example-2.xml')</code></pre>
 ==&gt;BERTHA</code></pre>
 <p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/jerry-followed_by-example.jpg" /></p>
 <p>In order to determine how many steps to go back, the <code>GremlinPipeline.toString()</code> can be handy for displaying all the steps in an expression.</p>
-<pre><code>gremlin&gt; println g.v(89).outE('followed_by').inV.outE('sung_by').inV.has('name','Garcia')             
-[StartPipe, OutEdgesPipe(followed_by), InVertexPipe, OutEdgesPipe(sung_by), InVertexPipe, PropertyFilterPipe(name,EQUAL,Garcia)]
+<pre><code>gremlin&gt; println g.v(89).out('followed_by').out('sung_by').has('name','Garcia')             
+[StartPipe, OutPipe(followed_by), OutPipe(sung_by), PropertyFilterPipe(name,EQUAL,Garcia)]
 ==&gt;null</code></pre>
 <p>Now, using the <code>back</code> step, notice how <code>back(3)</code> wraps 3 pipes prior to it. The name of the pipe in <a href="../pipes/Home.html">Pipes</a> is <code>BackFilterPipe</code>.</p>
-<pre><code>gremlin&gt; println g.v(89).outE('followed_by').inV.outE('sung_by').inV.has('name','Garcia').back(3).name
-[StartPipe, OutEdgesPipe(followed_by), InVertexPipe, BackFilterPipe([OutEdgesPipe(sung_by), InVertexPipe, PropertyFilterPipe(name,EQUAL,Garcia)]), PropertyPipe(name)]
+<pre><code>gremlin&gt; println g.v(89).out('followed_by').out('sung_by').has('name','Garcia').back(2).name
+[StartPipe, OutPipe(followed_by), BackFilterPipe([OutPipe(sung_by), PropertyFilterPipe(name,EQUAL,Garcia)]), PropertyPipe(name)]
 ==&gt;null</code></pre>
 <p>Moreover, you can use <code>as</code> to label a back point.</p>
-<pre><code>gremlin&gt; println g.v(89).outE('followed_by').inV.as('x').outE('sung_by').inV.has('name','Garcia').back('x').name
-[StartPipe, OutEdgesPipe(followed_by), AsPipe(x,InVertexPipe), BackFilterPipe([OutEdgesPipe(sung_by), InVertexPipe, PropertyFilterPipe(name,EQUAL,Garcia)]), PropertyPipe(name)]
+<pre><code>gremlin&gt; println g.v(89).out('followed_by').as('x').out('sung_by').has('name','Garcia').back('x').name
+[StartPipe, AsPipe(x,OutPipe(followed_by)), BackFilterPipe([OutPipe(sung_by), PropertyFilterPipe(name,EQUAL,Garcia)]), PropertyPipe(name)]
 ==&gt;null</code></pre>
     </div>
   </div>
@@ -103,7 +103,7 @@ g.loadGraphML('data/graph-example-2.xml')</code></pre>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 19:26:52</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
 </div>
 </div>
 
