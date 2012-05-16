@@ -51,55 +51,41 @@
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
       <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/indices-example.png" alt="" /></p>
+<p>And index is a data structure that supports the fast lookup of elements by some key/value pair. Lookups are usually in <code>log(n)</code> time where <code>n</code> is the number of elements in the index. There are two types of indexing structures supported by Blueprints. These are reflected in the two respective interfaces: <code>KeyIndexableGraph</code> and <code>IndexableGraph</code>.</p>
+<h2>KeyIndexableGraph and Fast LookUp of Elements by Key/Value Pairs</h2>
+<p>A <code>KeyIndexableGraph</code> is a graph that supports the automatic indexing of a vertex or edges by its key/value pair properties. When a method requires access to an element by a key/value, then an appropriate key index can be retrieved. Otherwise, a linear scan must take place. Such methods include <code>Graph.getVertices(String key, Object value)</code> and <code>Graph.getEdges(String key, Object value)</code>. The methods of <code>KeyIndexableGraph</code> are provided below.</p>
+<pre><code>public &lt;T extends Element&gt; void dropKeyIndex(String key, Class&lt;T&gt; elementClass);
+public &lt;T extends Element&gt; void createKeyIndex(String key, Class&lt;T&gt; elementClass);
+public &lt;T extends Element&gt; Set&lt;String&gt; getIndexedKeys(Class&lt;T&gt; elementClass);</code></pre>
+<h2>IndexableGraph and Putting, Getting, and Removing Elements</h2>
 <p>An <code>IndexableGraph</code> is a <code>Graph</code> that supports the indexing of its vertices and edges. An index is a data structure that allows for the fast retrieval of an element by a particular key/value pair. The <code>IndexableGraph</code> interface has the following methods:</p>
-<pre><code>public &lt;T extends Element&gt; Index&lt;T&gt; createAutomaticIndex(String indexName, Class&lt;T&gt; indexClass, Set&lt;String&gt; indexKeys, Parameter... indexParameters);
-public &lt;T extends Element&gt; Index&lt;T&gt; createManualIndex(String indexName, Class&lt;T&gt; indexClass, Parameter... indexParameters);
+<pre><code>public &lt;T extends Element&gt; Index&lt;T&gt; createIndex(String indexName, Class&lt;T&gt; indexClass, Parameter... indexParameters);
 public &lt;T extends Element&gt; Index&lt;T&gt; getIndex(String indexName, Class&lt;T&gt; indexClass);
 public Iterable&lt;Index&lt;? extends Element&gt;&gt; getIndices();
 public void dropIndex(String indexName);</code></pre>
-<h2>Manual Indices</h2>
-<p>There are two types of indices: <code>Type.AUTOMATIC</code> and <code>Type.MANUAL</code>. A manual index requires the developer to manually put, get, and remove elements from the index. To create a manual index of vertices, do the following:</p>
-<pre><code>Index&lt;Vertex&gt; index = graph.createManualIndex("test-idx", Vertex.class);</code></pre>
+<p>An index requires the developer to manually put, get, and remove elements from the index. To create a manual index of vertices, do the following:</p>
+<pre><code>Index&lt;Vertex&gt; index = graph.createIndex("test-idx", Vertex.class);</code></pre>
 <p>The <code>Index</code> interface has the following methods:</p>
 <pre><code>public long count(String key, Object value);
 public String getIndexName();
 public Class&lt;T&gt; getIndexClass();
-public Type getIndexType();
 public void put(String key, Object value, T element);
 public Iterable&lt;T&gt; get(String key, Object value);
+public Iterable&lt;T&gt; query(String key, Object value);
 public void remove(String key, Object value, T element);</code></pre>
-<p>Given the <code>index</code> object created previous, to add, query, and remove a vertex from this index, do the following:</p>
+<p>Given the <code>index</code> object created previous, to add, get, query, and remove a vertex from this index, do the following:</p>
 <pre><code>index.put("name","peter",vertex);
 Iterable&lt;Vertex&gt; results = index.get("name","peter");
+Iterable&lt;Vertex&gt; results = index.query("name", "PeTeR"); // assuming some case-insensitive index
 index.remove("name","peter",vertex);</code></pre>
-<p>With manual indices, the developer must be cognizant of maintaining the index with these methods.</p>
-<h2>Automatic Indices</h2>
-<p>When the developer does not wish to maintain an index, the developer can rely on indices of <code>Type.AUTOMATIC</code>. An automatic index will automatically <code>put</code> and <code>remove</code> elements from an index as the element mutates. That is, an automatic index indexes the properties of an element where the property key is the key and the property value is the value. As these properties change, an automatic index automatically reflects these changes. To create an automatic index, do the following:</p>
-<pre><code>Set&lt;String&gt; indexKeys = ...
-AutomaticIndex&lt;Vertex&gt; autoIndex = graph.createAutomaticIndex("test-aidx", Vertex.class, indexKeys);</code></pre>
-<p>The <code>AutomaticIndex</code> interface extends <code>Index</code> and provides, along with the <code>Index</code> methods, the following method:</p>
-<pre><code>public Set&lt;String&gt; getAutoIndexKeys();</code></pre>
-<p>An <code>AutomaticIndex</code> will index all newly created elements by the provide set of auto index keys. If this set of auto index keys is <code>null</code>, then all keys will be indexed. Here is an example of all this together:</p>
-<pre><code>Set&lt;String&gt; indexKeys = new HashSet&lt;String&gt;();
-indexKeys.add("name");
-AutomaticIndex&lt;Vertex&gt; autoIndex = graph.createAutomaticIndex("test-aidx", Vertex.class, indexKeys);
-Vertex a = graph.addVertex(null);
-a.setProperty("name","pavel");
-a.setProperty("country","belarus");
-Iterable&lt;Vertex&gt; results = autoIndex.get("name","pavel");
-// results contains vertex a
-results = autoIndex.get("country","belarus");
-// results does not contain vertex a</code></pre>
-<p><strong>Note</strong>: When an <code>IndexableGraph</code> is created a new (not constructed, but when there is no historic persistence), it comes with two automatic indices named <code>Index.VERTICES</code> and <code>Index.EDGES</code> that index all properties (constructed with <code>null</code> indexKeys argument). These indices automatically index any created vertices and edges, respectively. If these indices are not desired, simply <code>graph.dropIndex(Index.VERTICES)</code> and <code>graph.dropIndex(Index.EDGES)</code> before adding elements.</p>
-<h2>Index Parameters</h2>
-<p>The two index construction methods, <code>createManualIndex()</code> and <code>createdAutomaticIndex()</code>, have a <code>Parameter</code> &#x201C;var arg&#x201D; as their final argument. Some underlying graph implementations support the passing of parameters to tweak the underlying indexing model &#x2014; e.g. case insensitive querying. Please refer to the specifics of each <code>IndexableGraph</code> implementation for their respective support parameters.</p>
+<p>Finally, The index construction method <code>createIndex()</code> has a <code>Parameter</code> &#x201C;var arg&#x201D; as its final argument. Some underlying graph implementations support the passing of parameters to tweak the underlying indexing model &#x2014; e.g. case insensitive querying. Please refer to the specifics of each <code>IndexableGraph</code> implementation for their respective support parameters.</p>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

@@ -108,6 +108,15 @@
 	</tr><tr><td> long         </td>
 		<td> <code>/graphs/&lt;graph&gt;/indices/index/count?key=&lt;key&gt;&amp;value=&lt;value&gt;</code> </td>
 		<td> get a count of all elements with <code>&lt;key&gt;</code> property equal to <code>&lt;value&gt;</code> in <code>index</code>                                      </td>
+	</tr><tr><td> keys         </td>
+		<td> <code>/graphs/&lt;graph&gt;/keyindices/</code>                                  </td>
+		<td> get the combination of vertex and edge keys </td>
+	</tr><tr><td> keys         </td>
+		<td> <code>/graphs/&lt;graph&gt;/keyindices/vertex</code>                           </td>
+		<td> get vertex keys </td>
+	</tr><tr><td> keys         </td>
+		<td> <code>/graphs/&lt;graph&gt;/keyindices/edge</code>                           </td>
+		<td> get edge keys </td>
 	</tr><tr><td> strings      </td>
 		<td> <code>/graphs/&lt;graph&gt;/indices/index/keys</code>                          </td>
 		<td> get the auto index keys of the automatic index named <code>index</code> (<code>null</code> means wildcard)                                 </td>
@@ -140,9 +149,15 @@
 		<td> <code>/graphs/&lt;graph&gt;/edges/3?&lt;key&gt;=&lt;key'&gt;</code>                                          </td>
 		<td> update the properties of the edge with id <code>3</code>                                                                                   </td>
 	</tr><tr><td> index <sup>3</sup></td>
-		<td> <code>/graphs/&lt;graph&gt;/indices/index?class=vertex&amp;type=manual</code>                        </td>
+		<td> <code>/graphs/&lt;graph&gt;/indices/index?class=vertex</code>                        </td>
 		<td> create a new manual index named <code>index</code>                                                                                         </td>
-	</tr><tr><td> index <sup>3</sup></td>
+	</tr><tr><td> void </td>
+		<td> <code>/graphs/&lt;graph&gt;/keyindices/vertex/&lt;key&gt;</code>                           </td>
+		<td> create a new key index for a vertex </td>
+	</tr><tr><td> void        </td>
+		<td> <code>/graphs/&lt;graph&gt;/keyindices/edge/&lt;key&gt;</code>                           </td>
+		<td> create a new key index for an edge </td>
+	</tr><tr><td> void <sup>3</sup></td>
 		<td> <code>/graphs/&lt;graph&gt;/indices/index?class=vertex&amp;type=automatic&amp;keys=[&lt;key&gt;,&lt;key'&gt;]</code> </td>
 		<td> create a new automatic vertex index named <code>index</code> with keys <code>&lt;key&gt;</code> and <code>&lt;key'&gt;</code>                                                </td>
 	</tr><tr><td> void <sup>1</sup></td>
@@ -178,9 +193,6 @@
 		<td> <code>/graphs/&lt;graph&gt;/edges/3?&lt;key&gt;&amp;&lt;key'&gt;</code>                                       </td>
 		<td> remove properties <code>&lt;key&gt;</code> and <code>&lt;key'&gt;</code> from edge <code>3</code>      </td>
 	</tr><tr><td> void       </td>
-		<td> <code>/graphs/graph</code>                                                              </td>
-		<td> clear the graph of all its elements and indices           </td>
-	</tr><tr><td> void       </td>
 		<td> <code>/graphs/&lt;graph&gt;/indices/index</code>                                              </td>
 		<td> drop the index named <code>index</code>                              </td>
 	</tr><tr><td> void       </td>
@@ -202,7 +214,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-03-15 23:42:31</p>
+  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-16 02:00:40</p>
 </div>
 </div>
 

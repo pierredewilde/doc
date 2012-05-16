@@ -50,11 +50,10 @@
   <div class="wrap">
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
-      <p>This section will provide a collection of code examples that work with the Blueprints graph <span class="caps">API</span>. The in-memory <a class="internal present" href="TinkerGraph.html">TinkerGraph</a> database will be used throughout the examples. Please feel free to alter the graph constructor to work with different graph databases. These code examples can be found in the main Blueprints distribution <a href="https://github.com/tinkerpop/blueprints/blob/master/blueprints-test/src/test/java/com/tinkerpop/blueprints/pgm/impls/tg/CodeExamples.java">at this location</a>.</p>
+      <p>This section will provide a collection of basic code examples that work with the Blueprints graph <span class="caps">API</span>. The in-memory <a class="internal present" href="TinkerGraph.html">TinkerGraph</a> database will be used throughout the examples. Please feel free to alter the graph constructor to work with different graph databases.</p>
 <ol><li><a href="#create">Create a Simple Graph</a></li>
 	<li><a href="#elements">Iterate through the Elements of a Graph</a></li>
 	<li><a href="#edge">Iterate through the Edges of a Vertex</a></li>
-	<li><a href="#index">Use Indices to Get a Vertex by its Property</a></li>
 </ol><p><a name="create" id="create"></a></p>
 <h2>Create a Simple Graph</h2>
 <p>Create a graph. Add two vertices. Set the <code>name</code> property of each vertex. Create an <code>knows</code> edge between the two vertices. Print the components of the graph.</p>
@@ -64,7 +63,7 @@ Vertex b = graph.addVertex(null);
 a.setProperty("name", "marko");
 b.setProperty("name", "peter");
 Edge e = graph.addEdge(null, a, b, "knows");
-System.out.println(e.getOutVertex().getProperty("name") + "--" + e.getLabel() + "--&gt;" + e.getInVertex().getProperty("name"));</code></pre>
+System.out.println(e.getVertex(OUT).getProperty("name") + "--" + e.getLabel() + "--&gt;" + e.getVertex(IN).getProperty("name"));</code></pre>
 <p>The <code>System.out</code> after the code executes is:</p>
 <pre><code>marko--knows--&gt;peter</code></pre>
 <p><a name="elements" id="elements"></a></p>
@@ -102,7 +101,7 @@ e[12][6-created-&gt;3]</code></pre>
 <pre><code>Graph graph = TinkerGraphFactory.createTinkerGraph();
 Vertex a = graph.getVertex("1");
 System.out.println("vertex " + a.getId() + " has name " + a.getProperty("name"));
-for(Edge e : a.getOutEdges()) {
+for(Edge e : a.getEdges(OUT)) {
   System.out.println(e);
 }</code></pre>
 <p>The <code>System.out</code> after the code executes is:</p>
@@ -111,20 +110,13 @@ e[7][1-knows-&gt;2]
 e[9][1-created-&gt;3]
 e[8][1-knows-&gt;4]</code></pre>
 <p><a name="index" id="index"></a></p>
-<h2>Use Indices to Get a Vertex by its Property</h2>
-<p>Load the TinkerPop play graph diagrammed in <a class="internal present" href="Property-Graph-Model.html">Property Graph Model</a>. <a class="internal present" href="TinkerGraph.html">TinkerGraph</a> implements the <code>IndexableGraph</code> interface. Get the standard vertex index and then get all vertices named <code>marko</code>. Given that there is only one, we can simple next the first vertex out of the returned iterable. Print some information about the vertex.</p>
-<pre><code>Graph graph = TinkerGraphFactory.createTinkerGraph();
-Vertex a = ((IndexableGraph)graph).getIndex(Index.VERTICES, Vertex.class).get("name", "marko").iterator().next();
-System.out.println("vertex " + a.getId() + " has age " + a.getProperty("age"));</code></pre>
-<p>The <code>System.out</code> after the code executes is:</p>
-<pre><code>vertex 1 has age 29</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

@@ -50,61 +50,23 @@
   <div class="wrap">
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
-      <p>A <code>Graph</code> that implements the <code>TransactionalGraph</code> interface is a graph that supports Blueprints-style transactions. A <code>TransactionalGraph</code> has the following methods:</p>
-<pre><code>public void setMaxBufferSize(int bufferSize);
-public int getMaxBufferSize();
-public int getCurrentBufferSize();
-public void startTransaction();
+      <p>A <code>Graph</code> that implements the <code>TransactionalGraph</code> or <code>ThreadedTransactionalGraph</code> interfaces must natively support <a href="http://en.wikipedia.org/wiki/Database_transaction">transaction handling</a>.</p>
+<h2>TransactionalGraph and Starting and Stopping Transactions</h2>
+<p>A <code>TransactionalGraph</code> has the following methods.</p>
+<pre><code>public void startTransaction();
 public void stopTransaction(Conclusion conclusion);</code></pre>
-<h2>Automatic Transactions</h2>
-<p>A <code>TransactionalGraph</code> supports a transactional buffer. When the buffer size is greater than 0, every X manipulations of the graph (e.g. set/remove property, add/remove vertex, add/remove edge) is automatically wrapped in a transaction and committed, where X is the transaction buffer size. In this way, the developer does not need to start and stop transactions as this is automatically handled by the implementation. Upon construction, every <code>TransactionalGraph</code> has a transaction buffer size of 1. When the transaction buffer size is 0, the developer is required to manually start and stop transactions when editing the graph. That is done with the methods <code>startTransaction()</code> and <code>stopTransaction()</code>.</p>
-<h2>Transaction Examples</h2>
-<p>To put a graph in manual transaction model, evaluate the following:</p>
-<pre><code>txGraph.setMaxBufferSize(0);</code></pre>
-<p>Upon doing so, any edit operation (or group of edit operations) must be wrapped in a transaction. This is done as follows.</p>
-<pre><code>txGraph.startTransaction();
-// edit operations
-txGraph.stopTransaction(TransactionalGraph.Conclusion.SUCCESS);</code></pre>
-<p>There are two types of conclusions: <code>Conclusion.SUCCESS</code> and <code>Conclusion.FAILURE</code>. When a transaction is successful, it is committed to the underlying store. When the transaction is a failure, then all the edit operations up to the start of the transaction are rolled back. <strong>Note</strong>: Blueprints-enabled graphs do not require transactions for read-based operations.</p>
-<p>Finally, the relationship between automatic and manual transactions are explained with an example. When doing batch mutations using manual transactions, the code looks as follows:</p>
-<pre><code>int counter = 0;
-txGraph.setMaxBufferSize(0);
-txGraph.startTransaction();
-
-while(doingStuff) {
-  // do a graph manipulation
-  counter++;
-  if(counter % 1000 == 0) {
-    System.out.print(".");
-    txGraph.stopTransaction(Conclusion.SUCCESS);
-    txGraph.startTransaction();
-  }
-}
-txGraph.stopTransaction(Conclusion.SUCCESS);</code></pre>
-<p>This code, using automatic transaction handling can be simplified with a transaction buffer size of 1000.</p>
-<pre><code>txGraph.setMaxBufferSize(1000);
-while(doingStuff) {
-  // do a graph manipulation
-  if((txGraph.getCurrentBufferSize()-1) % 1000 == 0)
-    System.out.print(".");
-}</code></pre>
-<h2>Note on Automatic Transaction Semantics</h2>
-<p>When the max buffer size of a <code>TransactionalGraph</code> is greater than <code>0</code> (i.e. automatic mode) and the buffer max has not been reached, it is possible to commit or rollback the buffer prematurely using <code>stopTransaction()</code>. From there, everything prior to the last commit will be committed (<code>Conclusion.SUCCESS</code>) or rolled back (<code>Conclusion.FAILURE</code>). Once the the transaction has been stopped, the current buffer size is reset to 0 and writes can occur again. Finally, when the graph is <code>shutdown()</code>, any open transactions are successfully committed.</p>
-<p>The following methods do not obey the standard transaction semantics. They are not subject to commit and rollback behavior. Moreover, the starred methods (*) will cause the complete transaction buffer to commit when evaluated.</p>
-<ul><li><code>Graph.clear()</code> *</li>
-	<li><code>Graph.shutdown()</code> *</li>
-	<li><code>IndexableGraph.createManualIndex()</code></li>
-	<li><code>IndexableGraph.createAutomaticIndex()</code></li>
-	<li><code>IndexableGraph.dropIndex()</code> *</li>
-	<li><code>TransactionalGraph.setMaxBufferSize()</code> *</li>
-</ul>
+<p>When a transaction is started, all the subsequent mutation operations in the transaction occur within a transaction context. When the transaction is successfully stopped, those mutations operations are persisted and visible to other contexts interacting with the graph. If a transaction is failed, then the mutation operations are &#x201C;rolled back&#x201D; to when the transaction was started.</p>
+<p>To facilitate ease of use, a call to <code>startTransaction()</code> is not required. If a mutating operation is evaluated and a transaction has not been started, then a transaction is automatically started. However, it is up to the user to <code>stopTransaction(Conclusion conclusion)</code> or else they run the risk of a <code>OutOfMemoryException</code> if too many mutations have occurred. Finally, note that a <code>TransactionalGraph.shutdown()</code> will automatically successfully commit any open transaction.</p>
+<h2>ThreadedTransactionalGraph and Multi-Threads for One Transaction</h2>
+<p>A <code>ThreadedTransactionalGraph</code> extends <code>TransactionalGraph</code> with a single method.</p>
+<pre><code>public TransactionalGraph startThreadTransaction()</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

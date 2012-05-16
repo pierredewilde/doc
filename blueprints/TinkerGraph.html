@@ -61,13 +61,41 @@
 Graph graph = new TinkerGraph("/tmp/tinkergraph"); // on graph.shutdown() the graph is serialized to disk</code></pre>
 <p>There is a hardcoded representation of the graph diagrammed in <a class="internal present" href="Property-Graph-Model.html">Property Graph Model</a>. This is useful as a small, play dataset to get acquainted with the Blueprints <span class="caps">API</span>.</p>
 <pre><code>Graph graph = TinkerGraphFactory.createTinkerGraph();</code></pre>
+<h2>TinkerGraph Feature List</h2>
+<pre><code>supportsDuplicateEdges: true
+supportsSelfLoops: true
+supportsSerializableObjectProperty: true
+supportsBooleanProperty: true
+supportsDoubleProperty: true
+supportsFloatProperty: true
+supportsIntegerProperty: true
+supportsPrimitiveArrayProperty: true
+supportsUniformListProperty: true
+supportsMixedListProperty: true
+supportsLongProperty: true
+supportsMapProperty: true
+supportsStringProperty: true
+ignoresSuppliedIds: false
+isPersistent: true
+isRDFModel: false
+isWrapper: false
+supportsIndices: true
+supportsVertexIndex: true
+supportsEdgeIndex: true
+supportsKeyIndices: true
+supportsVertexKeyIndex: true
+supportsEdgeKeyIndex: true
+supportsEdgeIteration: true
+supportsVertexIteration: true
+supportsTransactions: false
+supportsThreadedTransactions: false</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

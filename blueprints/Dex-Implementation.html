@@ -58,13 +58,7 @@
 &lt;/dependency&gt;</code></pre>
 <pre><code>Graph graph = new DexGraph("/tmp/graph.dex");</code></pre>
 <p><a href="http://www.sparsity-technologies.com/dex"><span class="caps">DEX</span></a> is a graph database developed by <a href="http://www.sparsity-technologies.com/">Sparsity Technologies</a>. For a fine summary of the <span class="caps">DEX</span> graph database, please review the following <a href="http://www.sparsity-technologies.com/dex_tutorials">presentations</a>. The software can be downloaded from <a href="http://www.sparsity-technologies.com/dex_downloads">here</a> and be used with the default evaluation license (which restricts the amount of information <span class="caps">DEX</span> can deal with).</p>
-<p><span class="caps">DEX</span> natively supports the property graph data model defined by Blueprints. However, there are a few peculiarities.</p>
-<ol><li><strong>No user defined element identifiers</strong>: <span class="caps">DEX</span> is the gatekeeper and creator of vertex and edge identifiers. Thus, when creating a new vertex or edge instance, the provided object identifier is ignored.</li>
-	<li><strong>Vertices are labeled too</strong>: When adding vertices, the user can set <code>DEXGraph#LABEL</code> to be used as the label of the vertex to be created. Also, the label of a vertex (or even an element) can be retrieved through the <code>DEXElement#LABEL_PROPERTY</code> property.</li>
-</ol><p><code>DexGraph</code> implements <code>IndexableGraph</code>. However, the use of indices is limited when working with <span class="caps">DEX</span> and is explained as follows:</p>
-<ol><li>There is no support to create indices.</li>
-	<li>By default, there is an <code>AutomaticIndex</code> for each existing label which corresponds to the name of the index. Also, each index contains a key for each existing property.</li>
-</ol><p><strong>Memory configuration</strong></p>
+<h2>Memory Configuration</h2>
 <p><span class="caps">DEX</span> memory is not managed by the <span class="caps">JVM</span> heap, so an specific memory configuration must be set for <span class="caps">DEX</span> in order to set the maximum amount of memory to be used by a <span class="caps">DEX</span> application.</p>
 <p>Specifically, users should set <code>dex.io.cache.maxsize</code> as is explained <a href="http://www.sparsity-technologies.com/downloads/javadoc/edu/upc/dama/dex/utils/DEXConfig.html">here</a>.</p>
 <p><strong>Managment of <code>Iterable</code> collections</strong></p>
@@ -93,13 +87,41 @@ for (final Vertex vertex : vv) {
     ee.close();
 }
 vv.close();</code></pre>
+<h2>DexGraph Feature List</h2>
+<pre><code>supportsDuplicateEdges: true
+supportsSelfLoops: true
+supportsSerializableObjectProperty: false
+supportsBooleanProperty: true
+supportsDoubleProperty: true
+supportsFloatProperty: true
+supportsIntegerProperty: true
+supportsPrimitiveArrayProperty: false
+supportsUniformListProperty: false
+supportsMixedListProperty: false
+supportsLongProperty: false
+supportsMapProperty: false
+supportsStringProperty: true
+ignoresSuppliedIds: true
+isPersistent: true
+isRDFModel: false
+isWrapper: false
+supportsIndices: false
+supportsVertexIndex: false
+supportsEdgeIndex: false
+supportsKeyIndices: false
+supportsVertexKeyIndex: false
+supportsEdgeKeyIndex: false
+supportsEdgeIteration: true
+supportsVertexIteration: true
+supportsTransactions: false
+supportsThreadedTransactions: false</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

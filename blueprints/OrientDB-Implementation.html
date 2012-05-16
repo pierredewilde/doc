@@ -57,18 +57,42 @@
    &lt;version&gt;??&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 <pre><code>Graph graph = new OrientGraph("local:/tmp/orient");</code></pre>
-<p><a href="http://www.orientechnologies.com/">Orient Technologies</a> are the developers of <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a>. OrientDB is pure to the property graph model.</p>
-<div><strong><a href="http://www.slideshare.net/lvca/orient-db-introduction" title="OrientDB introduction - NoSQL">OrientDB introduction &#x2013; NoSQL</a></strong><div>View more <a href="http://www.slideshare.net/">presentations</a> from <a href="http://www.slideshare.net/lvca">Luca Garulli</a>.</div></div>
-<p>There is no impedance mismatch between Blueprints and OrientDB. However, there are a few peculiarities in OrientDB that make it not completely faithful to the <a class="internal present" href="Property-Graph-Model.html">property graph model</a>. These are itemized below.</p>
-<ol><li><strong>No user defined element identifiers</strong>: OrientDB is the gatekeeper and creator of vertex and edge identifiers. Thus, when creating a new vertex or edge, the provided object identifier is ignored.</li>
-</ol>
+<p><a href="http://www.orientechnologies.com/">Orient Technologies</a> are the developers of <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a>.</p>
+<h2>OrientGraph Feature List</h2>
+<pre><code>supportsDuplicateEdges: true
+supportsSelfLoops: true
+supportsSerializableObjectProperty: true
+supportsBooleanProperty: true
+supportsDoubleProperty: true
+supportsFloatProperty: true
+supportsIntegerProperty: true
+supportsPrimitiveArrayProperty: true
+supportsUniformListProperty: true
+supportsMixedListProperty: true
+supportsLongProperty: true
+supportsMapProperty: true
+supportsStringProperty: true
+ignoresSuppliedIds: true
+isPersistent: true
+isRDFModel: false
+isWrapper: false
+supportsIndices: true
+supportsVertexIndex: true
+supportsEdgeIndex: true
+supportsKeyIndices: true
+supportsVertexKeyIndex: true
+supportsEdgeKeyIndex: true
+supportsEdgeIteration: true
+supportsVertexIteration: true
+supportsTransactions: true
+supportsThreadedTransactions: false</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

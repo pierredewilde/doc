@@ -75,41 +75,41 @@
 		<td> <code>value</code> </td>
 		<td> remove the property of an element </td>
 		<td> <code>@Property("name")</code> </td>
-	</tr><tr><td> <code>@Relation</code> </td>
+	</tr><tr><td> <code>@Adjacency</code> </td>
 		<td> <code>get</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> get the vertex or vertices <code>X</code> related to the vertex </td>
-		<td> <code>@Relation(label="X", direction=Direction.STANDARD)</code> </td>
-	</tr><tr><td> <code>@Relation</code> </td>
+		<td> <code>@Adjacency(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Adjacency</code> </td>
 		<td> <code>set</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> set the vertex or vertices <code>X</code> related to the vertex </td>
-		<td> <code>@Relation(label="X", direction=Direction.STANDARD)</code> </td>
-	</tr><tr><td> <code>@Relation</code> </td>
+		<td> <code>@Adjacency(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Adjacency</code> </td>
 		<td> <code>add</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> add a vertex <code>X</code> related to the vertex </td>
-		<td> <code>@Relation(label="X", direction=Direction.STANDARD)</code> </td>
-	</tr><tr><td> <code>@Relation</code> </td>
+		<td> <code>@Adjacency(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Adjacency</code> </td>
 		<td> <code>remove</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> remove a vertex <code>X</code> related to the vertex </td>
-		<td> <code>@Relation(label="X", direction=Direction.STANDARD)</code> </td>
-	</tr><tr><td> <code>@Adjacency</code> </td>
+		<td> <code>@Adjacency(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Incident</code> </td>
 		<td> <code>get</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> get the edges <code>X</code> related to the vertex </td>
-		<td> <code>@Adjacency(label="X", direction=Direction.STANDARD)</code> </td>
-	</tr><tr><td> <code>@Adjacency</code> </td>
+		<td> <code>@Incident(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Incident</code> </td>
 		<td> <code>add</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> add an edge <code>X</code> related to the vertex </td>
-		<td> <code>@Adjacency(label="X", direction=Direction.STANDARD)</code> </td>
-	</tr><tr><td> <code>@Adjacency</code> </td>
+		<td> <code>@Incident(label="X", direction=Direction.OUT)</code> </td>
+	</tr><tr><td> <code>@Incident</code> </td>
 		<td> <code>remove</code> </td>
 		<td> <code>label</code>, <code>direction</code> </td>
 		<td> remove an edge <code>X</code> related to the vertex </td>
-		<td> <code>@Adjacency(label="X", direction=Direction.STANDARD)</code> </td>
+		<td> <code>@Incident(label="X", direction=Direction.OUT)</code> </td>
 	</tr><tr><td> <code>@Domain</code> </td>
 		<td> <code>get</code> </td>
 		<td> none </td>
@@ -122,16 +122,16 @@
 		<td> <code>@Range</code> </td>
 	</tr></table><p>Note that &#x201C;get&#x201D; and &#x201C;set&#x201D; methods for <code>@Relations</code> can be either single-valued or collection-valued.  For example:</p>
 <pre><code>public interface Person {
-    @Relation(label = "spouse")
+    @Adjacency(label = "spouse")
     Person getSpouse();
     
-    @Relation(label = "spouse")
+    @Adjacency(label = "spouse")
     void setSpouse(Person spouse);
     
-    @Relation(label = "child")
+    @Adjacency(label = "child")
     Collection&lt;Person&gt; getChildren();
     
-    @Relation(label = "child")
+    @Adjacency(label = "child")
     void setChildren(Collection&lt;Person&gt; children);
 }</code></pre>
 <p>The above interface uses both styles of getter and setter: a collection-valued style which allows you to set multiple values simultaneously, and gives you back all values at once, and a &#x201C;functional&#x201D; style which requires you to specify exactly one value (which can be null), and gives you back at most one value.  Each style has its advantages, depending on your application.</p>
@@ -153,7 +153,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-03-15 23:22:09</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 16:15:50</p>
 </div>
 </div>
 

@@ -91,31 +91,31 @@
 		<td> <code>LabelPipe()</code> </td>
 	</tr><tr><td> <code>out(labels...?)</code> </td>
 		<td> out adjacent vertices to the vertex </td>
-		<td> <code>OutPipe(labels...?)</code> </td>
+		<td> <code>VerticesVerticesPipe(out,labels...?)</code> </td>
 	</tr><tr><td> <code>outE(labels...?)</code> </td>
 		<td> the outgoing edges of the vertex </td>
-		<td> <code>OutEdgesPipe(labels...?)</code> </td>
+		<td> <code>VerticesEdgesPipe(out,labels...?)</code> </td>
 	</tr><tr><td> <code>in(labels...?)</code> </td>
 		<td> in adjacent vertices to the vertex </td>
-		<td> <code>InPipe(labels...?)</code> </td>
+		<td> <code>VerticesVerticesPipe(in,labels...?)</code> </td>
 	</tr><tr><td> <code>inE(labels...?)</code> </td>
 		<td> the incoming edges of the vertex </td>
-		<td> <code>InEdgesPipe(labels...?)</code> </td>
+		<td> <code>VerticesEdgesPipe(in,labels...?)</code> </td>
 	</tr><tr><td> <code>both(labels...?)</code> </td>
 		<td> both adjacent vertices of the vertex </td>
-		<td> <code>BothPipe(labels...?)</code> </td>
+		<td> <code>VerticesVerticesPipe(both,labels...?)</code> </td>
 	</tr><tr><td> <code>bothE(labels...?)</code> </td>
 		<td> both incoming and outgoing edges of the vertex </td>
-		<td> <code>BothEdgesPipe(labels...?)</code> </td>
+		<td> <code>VerticesEdgesPipe(both,labels...?)</code> </td>
 	</tr><tr><td> <code>outV</code> </td>
 		<td> the outgoing tail vertex of the edge </td>
-		<td> <code>OutVertexPipe()</code> </td>
+		<td> <code>EdgesVerticesPipe(out)</code> </td>
 	</tr><tr><td> <code>inV</code> </td>
 		<td> the incoming head vertex of the edge </td>
-		<td> <code>InVertexPipe()</code> </td>
+		<td> <code>EdgesVerticesPipe(in)</code> </td>
 	</tr><tr><td> <code>bothV</code> </td>
 		<td> both incoming and outgoing vertices of the edge </td>
-		<td> <code>BothVerticesPipe()</code> </td>
+		<td> <code>EdgesVerticesPipe(both)</code> </td>
 	</tr><tr><td> <code>['key']</code> </td>
 		<td> get the property value of an element </td>
 		<td> <code>PropertyPipe('key')</code> </td>
@@ -201,6 +201,9 @@
 	</tr><tr><td> <code>retain(collection)</code> </td>
 		<td> allow everything to pass except what is not in <code>collection</code> </td>
 		<td> <code>RetainFilterPipe(collection)</code> </td>
+	</tr><tr><td> <code>interval(key,start,end)</code> </td>
+		<td> allow elements to pass that have their property in provided start/end interval </td>
+		<td> <code>IntervalFilterPipe(key,start,end)</code> </td>
 	</tr></table><h2>SideEffect-Based Steps</h2>
 <table><tr><th>step </th>
 		<th>description </th>
@@ -267,7 +270,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-03 23:55:47</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-15 19:26:52</p>
 </div>
 </div>
 

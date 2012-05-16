@@ -51,15 +51,15 @@
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
       <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/impls.png" alt="" /></p>
-<p>In order to connect a graph database to Blueprints, the Blueprints property graph interfaces must be implemented. As such, the graph database <span class="caps">API</span> and the Blueprints <span class="caps">API</span> need to be coupled. Each subsection discusses the various implementations of the Blueprints interfaces maintained by the main Blueprints distribution.</p>
-<p><strong><span class="caps">DEPENDENCY</span> <span class="caps">NOTE</span></strong>: It is important to note that including a <code>&lt;dependency/&gt;</code> to Blueprints does not entail all the respective graph database dependencies. The reason for this is that it allows users to include only those graph database implementations they wish for their particular projects (e.g. based on licensing, size, performance, etc.).</p>
+<p>In order to connect a graph database to Blueprints, the Blueprints property graph interfaces must be implemented. For non-native Blueprints graph databases, the raw graph database <span class="caps">API</span> and the Blueprints <span class="caps">API</span> need to be coupled. For native Blueprints graph databases, no such coupling is needed as only the interfaces need to be implemented. Each subsection discusses the various implementations of the Blueprints interfaces maintained by the main Blueprints distribution.</p>
+<p><strong><span class="caps">DEPENDENCY</span> <span class="caps">NOTE</span></strong>: It is important to note that including a <code>&lt;dependency/&gt;</code> to Blueprints does not entail all the respective graph database/framework dependencies distributed with Blueprints. The reason for this is that it allows users to include only those graph implementations they wish for their particular projects (e.g. based on licensing, size, performance, etc.).</p>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

@@ -52,38 +52,27 @@
     <div id="template">
       <p>Blueprints comes with a suite of test cases to ensure that any implementation of the <a class="internal present" href="Property-Graph-Model.html">property graph model</a> interfaces behaves as required in order to work seamlessly within applications that depend on Blueprints. This section will discuss the test suites and how to build a simple JUnit test class to validate an implementation of this model.</p>
 <p>There currently exists the following test suites:</p>
-<ol><li><strong>AutomaticIndexTestSuite</strong>: ensures that automatic indices are managed properly.</li>
+<ol><li><strong>GraphTestSuite</strong>: ensure that vertices and edges work together properly.</li>
+	<li><strong>VertexTestSuite</strong>: ensure that vertices and their properties are added and removed properly.</li>
 	<li><strong>EdgeTestSuite</strong>: ensure that edges and their properties are added and removed properly.</li>
 	<li><strong>GraphMLReaderTestSuite</strong>: ensure that GraphML files are read properly from disk and represented properly.</li>
-	<li><strong>GraphTestSuite</strong>: ensure that vertices and edges work together properly.</li>
+	<li><strong>GMLReaderTestSuite</strong>: ensure that <span class="caps">GML</span> files are read properly from disk and represented properly.</li>
+	<li><strong>GraphSONReaderTestSuite</strong>: ensure that GraphSON files are read properly from disk and represented properly.</li>
+	<li><strong>KeyIndexableGraphTestSuite</strong>: ensures that graphs that support automatic key indices work properly.</li>
 	<li><strong>IndexableGraphTestSuite</strong>: ensures that graphs that support indices behave properly.</li>
 	<li><strong>IndexTestSuite</strong>: ensure that the index system works properly.</li>
 	<li><strong>TransactionalGraphTestSuite</strong>: ensures that graphs that support transactions behave properly.</li>
-	<li><strong>VertexTestSuite</strong>: ensure that vertices and their properties are added and removed properly.</li>
 </ol><h2>Blueprints-Tests Dependency</h2>
 <p>It is necessary that the Blueprints test suite is depended when testing a Blueprints-enabled graph framework. Simply import the <code>blueprints-tests</code>. With this dependency the test suite is available.</p>
 <pre><code>&lt;dependency&gt;
-  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
   &lt;artifactId&gt;blueprints-tests&lt;/artifactId&gt;
-  &lt;version&gt;0.5&lt;/version&gt;
+  &lt;version&gt;??&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 <h2>Testing a Property Graph Model Implementation</h2>
-<p>To ensure that an implementation of the <a class="internal present" href="Property-Graph-Model.html">property graph model</a> is implemented correctly, a simple <a href="http://www.junit.org/">JUnit</a> test case of the following form will determine its compliance. Unfortunately, there is no perfect general interface solution that will work regardless of the underlying graph framework, while being specific enough to be useful. For this reason, a <code>GraphTest</code> has public boolean fields that need to be set that specify the peculiarities of the graph framework.</p>
+<p>To ensure that an implementation of the <a class="internal present" href="Property-Graph-Model.html">property graph model</a> is implemented correctly, a simple <a href="http://www.junit.org/">JUnit</a> test case of the following form will determine its compliance. Unfortunately, there is no perfect general interface solution that will work regardless of the underlying graph framework, while being specific enough to be useful. For this reason, be sure the <code>Features</code> of the respective <code>Graph</code> implementations are set correctly as this allows the test suite to dynamically alter is testing behavior to account for the various nuances of an implementation.</p>
 <pre><code>public class TinkerGraphTest extends GraphTest {
-
-    public TinkerGraphTest() {
-        this.allowsDuplicateEdges = true;
-        this.allowsSelfLoops = true;
-        this.ignoresSuppliedIds = false;
-        this.isPersistent = false;
-        this.isRDFModel = false;
-        this.supportsVertexIteration = true;
-        this.supportsEdgeIteration = true;
-        this.supportsVertexIndex = true;
-        this.supportsEdgeIndex = true;
-        this.supportsTransactions = false;
-    }
 
     public void testVertexTestSuite() throws Exception {
         this.stopWatch();
@@ -103,6 +92,12 @@
         printTestPerformance("GraphTestSuite", this.stopWatch());
     }
 
+    public void testKeyIndexableGraphTestSuite() throws Exception {
+        this.stopWatch();
+        doTestSuite(new KeyIndexableGraphTestSuite(this));
+        printTestPerformance("KeyIndexableGraphTestSuite", this.stopWatch());
+    }
+
     public void testIndexableGraphTestSuite() throws Exception {
         this.stopWatch();
         doTestSuite(new IndexableGraphTestSuite(this));
@@ -115,19 +110,25 @@
         printTestPerformance("IndexTestSuite", this.stopWatch());
     }
 
-    public void testAutomaticIndexTestSuite() throws Exception {
-        this.stopWatch();
-        doTestSuite(new AutomaticIndexTestSuite(this));
-        printTestPerformance("AutomaticIndexTestSuite", this.stopWatch());
-    }
-
     public void testGraphMLReaderTestSuite() throws Exception {
         this.stopWatch();
         doTestSuite(new GraphMLReaderTestSuite(this));
         printTestPerformance("GraphMLReaderTestSuite", this.stopWatch());
     }
 
-    public Graph getGraphInstance() {
+    public void testGMLReaderTestSuite() throws Exception {
+        this.stopWatch();
+        doTestSuite(new GMLReaderTestSuite(this));
+        printTestPerformance("GMLReaderTestSuite", this.stopWatch());
+    }
+
+    public void testGraphSONReaderTestSuite() throws Exception {
+        this.stopWatch();
+        doTestSuite(new GraphSONReaderTestSuite(this));
+        printTestPerformance("GraphSONReaderTestSuite", this.stopWatch());
+    }
+
+    public Graph generateGraph() {
         return new TinkerGraph();
     }
 
@@ -149,7 +150,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 

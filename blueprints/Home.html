@@ -61,6 +61,7 @@
 </ul><p>The documentation herein will provide information regarding the use of Blueprints.<sup class="footnote"><a href="#fn1">1</a></sup> Please join the Gremlin users group at <a href="http://groups.google.com/group/gremlin-users">http://groups.google.com/group/gremlin-users</a> for all <a href="../index.html">TinkerPop</a> related discussions.</p>
 <p>Blueprints JavaDoc: <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/1.2/api/">1.2</a><br />
 Older JavaDocs: <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/1.1/api/">1.1</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/1.0/api/">1.0</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.9/api/">0.9</a> &#x2013;  <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.8/api/">0.8</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.7/api/">0.7</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.6/api/">0.6</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.5/api/">0.5</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.4/api/">0.4</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.3/api/">0.3</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.2/api/">0.2</a> &#x2013; <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.1/api/">0.1</a></p>
+<p><strong><span class="caps">NOTE</span></strong>: Information on <a class="internal present" href="TinkerPop-Versioning.html">TinkerPop versioning</a></p>
 <hr /><pre><code>&lt;!-- neo4j used in this example --&gt;
 &lt;dependency&gt;
    &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
@@ -84,14 +85,12 @@ graph.shutdown();</code></pre><br /><hr /><ul><li>Introduction
 	</ul></li>
 	<li>Advanced Graph Handling
 	<ul><li><a class="internal present" href="Graph-Transactions.html">Graph Transactions</a></li>
-		<li><a class="internal present" href="Graph-Indices.html">Graph Indices</a>
-			<ul><li><a class="internal present" href="Graph-Indices-Helpers.html">Graph Indices Helpers</a></li>
-			</ul></li>
+		<li><a class="internal present" href="Graph-Indices.html">Graph Indices</a></li>
 	</ul></li>
 	<li><a class="internal present" href="Implementations.html">Implementations</a>
 	<ul><li><a class="internal present" href="TinkerGraph.html">TinkerGraph</a></li>
 		<li><a class="internal present" href="Neo4j-Implementation.html">Neo4j Implementation</a>
-			<ul><li><a class="internal present" href="Neo4jHa-implementation.html">Neo4j HA Implementation</a></li>
+			<ul><li><a class="internal present" href="Neo4jHa-Implementation.html">Neo4jHA Implementation</a></li>
 				<li><a class="internal present" href="Neo4jBatch-Implementation.html">Neo4jBatch Implementation</a></li>
 			</ul></li>
 		<li><a class="internal present" href="Sail-Implementation.html">Sail Implementation</a></li>
@@ -112,10 +111,11 @@ graph.shutdown();</code></pre><br /><hr /><ul><li>Introduction
 			<li><a class="internal present" href="GraphSON-Reader-and-Writer-Library.html">GraphSON Reader and Writer Library</a></li>
 		</ul></li>
 		<li>Wrappers
-		<ul><li><a class="internal present" href="ReadOnly-Implementation.html">ReadOnly Implementation</a></li>
+		<ul><li><a class="internal present" href="Bulk-Implementation.html">Bulk Implementation</a></li>
+			<li><a class="internal present" href="ReadOnly-Implementation.html">ReadOnly Implementation</a></li>
 			<li><a class="internal present" href="Event-Implementation.html">Event Implementation</a></li>
 			<li><a class="internal present" href="Partition-Implementation.html">Partition Implementation</a></li>
-			<li><a class="internal present" href="Id-implementation.html">Id Implementation</a></li>
+			<li><a class="internal present" href="Id-Implementation.html">Id Implementation</a></li>
 		</ul></li>
 	</ul></li>
 	<li>Conclusion
@@ -130,7 +130,7 @@ graph.shutdown();</code></pre><br /><hr /><ul><li>Introduction
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>joshsh</b>, 2012-05-02 17:53:34</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 00:22:57</p>
 </div>
 </div>
 
