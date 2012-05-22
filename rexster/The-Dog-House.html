@@ -52,7 +52,7 @@
     <div id="template">
       <p>Rexster&#x2019;s Dog House is a browser-based interface to Rexster and currently provides the following functions:</p>
 <ul><li>Vertex and Edge Browser &#x2013; View vertices and edges for a selected graph.</li>
-	<li>Filter graph elements by index.</li>
+	<li>Filter graph elements by key index.</li>
 	<li>Basic graph visualization with <a href="http://thejit.org">JavaScript InfoVis Toolkit</a>.</li>
 	<li>Launch <a class="internal present" href="Extensions.html">Extensions</a>.</li>
 	<li>Gremlin Console &#x2013; Simulates a Gremlin console session against a selected graph.</li>
@@ -72,9 +72,9 @@
 <h1>Vertex and Edge Browser</h1>
 <p>The Vertex and Edge Browser lists the graphs that are configured within Rexster.  Rexster will only shows those graphs which are marked as enabled within the configuration.  Selecting a graph yields the opportunity to browse vertices or edges.  A pager at the top and bottom of the browse panel listing vertices or edges allows one to cycle through the listing and the multi-cornered arrow button within each drills through to a detailed view of that element.  From there it is possible to see other graph elements associated with the one selected.</p>
 <p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-dog-house-browse.png" alt="" /></p>
-<p>Note the small magnifying glass button to the right of the move next button on the pager.  The button will display a filtering dialog box which allows you to select the index to search by and the key/value for the filter.</p>
+<p>Note the small magnifying glass button to the right of the move next button on the pager.  The button will display a filtering dialog box which allows you to select the key index to search by and the value for the filter.</p>
 <p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-dog-house-index.png" alt="" /></p>
-<p>When you click the Filter button the vertex/edge browser will page through the results returned by the index.  To cancel the filtering, simply click the Remove button, which will appear to the right of the Filter button after a filter is created.</p>
+<p>When you click the Filter button the vertex/edge browser will page through the results returned by the key index.  To cancel the filtering, simply click the Remove button, which will appear to the right of the Filter button after a filter is created.</p>
 <p>The value field of the filtering dialog box allows <a class="internal present" href="Property-Data-Types.html">Rexster typing</a>, so if your index is an integer value, you can enter <code>(i,10)</code> to get your results.</p>
 <h1>Graph Visualization</h1>
 <p>You can visualize parts of a graph from a starting vertex.  Click the Visualize button attached to each vertex to display a the vertex and its connected vertices.</p>
@@ -109,7 +109,7 @@ gremlin&gt; }</code></pre>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-16 02:00:40</p>
+  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-20 14:33:18</p>
 </div>
 </div>
 

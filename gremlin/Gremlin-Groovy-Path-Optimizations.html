@@ -55,32 +55,35 @@
 <pre><code>g = new TinkerGraph()
 g.loadGraphML('data/graph-example-2.xml')</code></pre>
 <p>All the examples make use of the following code snippet to determine timing:</p>
-<pre><code>t = System.currentTimeMillis()
-// the expression
-System.currentTimeMillis() - t</code></pre>
+<pre><code>t = System.currentTimeMillis(); ...expression... ; System.currentTimeMillis() - t</code></pre>
 <h2>Avoid Element Property Selection using Key</h2>
 <p>Gremlin provides field support for grabbing property values of elements (e.g. vertices/edge) by simply providing the property key as a field selector of the instance. However, while this is convenient, it is slow as it requires Java reflection to resolve the field. If performance is the concern, it is always best to use the raw <a href="../blueprints/Home.html">Blueprints</a> <span class="caps">API</span> methods even though they tend to be more verbose and less attractive. In general, for <a href="http://en.wikipedia.org/wiki/Read-eval-print_loop">REPLing</a> around a graph, use the more concise representation. For production traversals, use native Blueprints <span class="caps">API</span> calls and avoid reflection.</p>
-<pre><code>~165ms: g.E.sideEffect{it.weight}.iterate()
-~115ms: g.E.sideEffect{it.getProperty('weight')}.iterate()</code></pre>
+<pre><code>~50ms: g.E.sideEffect{it.weight}.iterate()
+~5ms: g.E.sideEffect{it.getProperty('weight')}.iterate()</code></pre>
 <p>The method call <code>it.getProperty('weight')</code> is much faster as a direct reference to the appropriate Java method is known. Using <code>it.weight</code> is a convenient, but slow convention.</p>
-<pre><code>~2000ms: g.V.outE.filter{it.weight&gt;0.0}.inV.outE.filter{it.weight&gt;0.0}.inV.iterate()
-~250ms: g.V.outE.filter{it.getProperty('weight')&gt;0.0}.inV.outE.filter{it.getProperty('weight')&gt;0.0}.inV.iterate()
-~150ms: g.V.outE.has('weight',T.gt,0.0f).inV.outE.has('weight',T.gt,0.0f).inV.iterate()</code></pre>
+<pre><code>~1750ms: g.V.outE.filter{it.weight&gt;0}.inV.outE.filter{it.weight&gt;0}.inV.iterate()
+~100ms: g.V.outE.filter{it.getProperty('weight')&gt;0}.inV.outE.filter{it.getProperty('weight')&gt;0}.inV.iterate()
+~60ms: g.V.outE.has('weight',T.gt,0).inV.outE.has('weight',T.gt,0).inV.iterate()</code></pre>
 <p>Note that this <code>Element.key</code> is not the same as <code>Pipe.key</code>. For instance, <code>g.E.weight</code> is fast as its applied to a Pipe, not to a specific element.</p>
 <h2>Using Loops</h2>
-<pre><code>~900ms: g.v(89).out.loop(1){it.loops &lt; 5}.iterate()
-~200ms: g.v(89).out.out.out.out.iterate()</code></pre>
+<pre><code>~850ms: g.v(89).out.loop(1){it.loops &lt; 5}.iterate()
+~225ms: g.v(89).out.out.out.out.iterate()</code></pre>
 <p>The <code>loop</code> step takes a function that determine whether to loop an object or not (i.e. a &#x201C;while&#x201D;). &#x201C;Unrolling&#x201D; the loop is more efficient than using <code>loop</code>. In many situations, knowing how many times to loop is not known and as such, <code>loop</code> is required. A nifty trick to use is to use code to construct the expression:</p>
 <pre><code>gremlin&gt; pipe = g.v(89)._(); null
 ==&gt;null
-gremlin&gt; (1..5).each{
+gremlin&gt; (1..3).each{
   pipe = pipe.out;
 }; null
 ==&gt;null
 gremlin&gt; pipe
+==&gt;v[81]
+==&gt;v[264]
+==&gt;v[153]
+==&gt;v[160]
+==&gt;v[164]
 ...
 gremlin&gt; pipe.toString()
-==&gt;[StartPipe, OutPipe, OutPipe, OutPipe, OutPipe, OutPipe]</code></pre>
+==&gt;[StartPipe, OutPipe, OutPipe, OutPipe]</code></pre>
 <h2>Method Notation vs. Property Notation</h2>
 <p>In many situations, a step looks like an object property from a Java/Groovy perspective. In fact, each step is a method. However, by using the <a href="http://en.wikipedia.org/wiki/Metaprogramming">metaprogramming</a> facilities offered by Groovy, its possible to &#x201C;trick&#x201D; Groovy into thinking that a property is a method. For example, assume the following pipeline:</p>
 <pre><code>v.outE.inV.name</code></pre>
@@ -93,19 +96,13 @@ gremlin&gt; pipe.toString()
   } 
   ...
 }</code></pre>
-<p>However, the drawback of Gremlin&#x2019;s terse syntax is that it takes Groovy longer to compile the Gremlin statement as it requires heavy reflection. Below are some timings of identical Gremlin statements. The first uses the standard, terse property notation. The latter, uses the Java/Groovy method notation. The times presented are the times required to construct the pipeline, not to evaluate it. The evaluation of both styles is identical.</p>
-<pre><code>~100ms: g.V.outE.inV
-~30ms: g.V().outE().inV()
-
-~100ms: g.V.outE.inV.outE.inV
-~35ms: g.V().outE().inV().outE().inV()</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

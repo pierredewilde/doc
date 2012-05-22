@@ -51,7 +51,25 @@
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
       <p>Rexster supports a simple authentication model allowing <a class="internal present" href="Rexster-Configuration.html">configuration</a> through <code>rexster.xml</code>.  The model is extensible to allow Rexster users to plug-in their own security implementations with relative ease.  The authentication process extends across all aspects of Rexster to include <a class="internal present" href="Basic-REST-API.html">REST</a>, <a class="internal present" href="The-Dog-House.html">Dog House</a> and <a class="internal present" href="Rexster-Console.html">Rexster Console</a> access.</p>
-<p>From a <span class="caps">REST</span> and Dog House perspective, Rexster supports <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">Basic Authentication</a> with the <code>default</code> configuration.  To make a <span class="caps">REST</span> <span class="caps">API</span> call to Rexster with authentication turned on:</p>
+<p>From a <span class="caps">REST</span> and Dog House perspective, Rexster supports <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">Basic Authentication</a> with the <code>default</code> configuration:</p>
+<pre><code>&lt;rexster&gt;
+  ...
+  &lt;security&gt;
+    &lt;authentication&gt;
+        &lt;type&gt;default&lt;/type&gt;
+        &lt;configuration&gt;
+          &lt;users&gt;
+            &lt;user&gt;
+              &lt;username&gt;rexster&lt;/username&gt;
+              &lt;password&gt;rexster&lt;/password&gt;
+            &lt;/user&gt;
+          &lt;/users&gt;
+        &lt;/configuration&gt;
+    &lt;/authentication&gt;
+  &lt;/security&gt;
+  ...
+&lt;/rexster&gt;</code></pre>
+To make a <span class="caps">REST</span> <span class="caps">API</span> call to Rexster with authentication turned on:
 <pre><code>curl -H "Authorization:Basic cmV4c3RlcjpyZXhzdGVy" http://localhost:8182/graphs</code></pre>
 <p>To prepare the request above, the user name is appended with a colon and concatenated with the password. The resulting string is encoded with the Base64 algorithm. For example, given the user name &#x2018;rexster&#x2019; and password &#x2018;rexster&#x2019;, the string &#x2018;rexster:rexster&#x2019; is Base64 encoded, resulting in &#x2018;cmV4c3RlcjpyZXhzdGVy&#x2019;.  In the case of Dog House, the browser will produce an authentication dialog box to capture the username and password.</p>
 <h1>Custom Authentication</h1>
@@ -79,7 +97,7 @@ public String getName() {
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-16 02:00:40</p>
+  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-20 14:33:18</p>
 </div>
 </div>
 

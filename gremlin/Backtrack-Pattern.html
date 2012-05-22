@@ -55,10 +55,10 @@
 <ul><li>&#x201C;What is the age of my friends who have friends who are older than 30 years old?&#x201D;</li>
 	<li>&#x201C;What other products have my friends purchased who have also purchased a product of type X?&#x201D;</li>
 </ul><pre><code>g = TinkerGraphFactory.createTinkerGraph()</code></pre>
-<p>The query below says, in plain English: &#x201C;What are the ages of the people that know people that are 30+ years old?&#x201D; The call to <code>back(2)</code> refers to the elements 2 steps ago that have paths up to the <code>back(2)</code> step (i.e. back to the <code>V</code> step). In the example below, <code>back(2)</code> &#x201C;wraps&#x201D; <code>out('knows').filter{it.age &gt; 30}</code>.</p>
-<pre><code>gremlin&gt; g.V.out('knows').filter{it.age &gt; 30}.back(2).age
+<p>The query below says, in plain English: &#x201C;What are the ages of the people that know people that are 30+ years old?&#x201D; The call to <code>back(2)</code> refers to the elements 2 steps ago that have paths up to the <code>back(2)</code> step (i.e. back to the <code>V</code> step). In the example below, <code>back(2)</code> &#x201C;wraps&#x201D; <code>out('knows').has('age', T.gt, 30)</code>.</p>
+<pre><code>gremlin&gt; g.V.out('knows').has('age', T.gt, 30).back(2).age
 ==&gt;29
-gremlin&gt; g.V.as('x').outE('knows').inV.filter{it.age &gt; 30}.back('x').age
+gremlin&gt; g.V.as('x').outE('knows').inV.has('age', T.gt, 30).back('x').age
 ==&gt;29</code></pre>
 <p>A more complicated example is provided over the Grateful Dead graph diagrammed in <a class="internal present" href="Defining-a-More-Complex-Property-Graph.html">Defining a More Complex Property Graph</a>.</p>
 <pre><code>g = new TinkerGraph()
@@ -103,7 +103,7 @@ g.loadGraphML('data/graph-example-2.xml')</code></pre>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

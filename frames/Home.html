@@ -74,9 +74,8 @@ Older JavaDocs: <a href="http://tinkerpop.com/maven2/com/tinkerpop/frames/0.6/ap
 
 public class Frames {
   public Frames() {
-   Graph graph =  new Neo4jGraph("/tmp/neo4j");
-   FramesManager manager = new FramesManager(graph);
-   Person person = manager.frame(graph.getVertex(1), Person.class);
+   FramedGraph&lt;Neo4jGraph&gt; graph = new FramedGraph&lt;Neo4jGraph&gt;(new Neo4jGraph("/tmp/neo4j"));
+   Person person = graph.getVertex(1, Person.class);
    person.getName(); // equals "marko"
   }
 }</code></pre>
@@ -103,7 +102,7 @@ public class Frames {
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 20:26:04</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-21 18:21:17</p>
 </div>
 </div>
 

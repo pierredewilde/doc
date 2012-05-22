@@ -85,19 +85,20 @@ g.loadGraphML('data/graph-example-2.xml')</code></pre>
 gremlin&gt; m = [:]                                                              
 gremlin&gt; g.v(12).out.groupCount(m){it.name}.loop(2){c++ &lt; 1000}.iterate()
 gremlin&gt; m
-==&gt;CHINA CAT SUNFLOWER=533
-==&gt;RAMBLE ON ROSE=521
-==&gt;WHARF RAT=207
-==&gt;HES GONE=447
-==&gt;HURTS ME TOO=107
-==&gt;DARK STAR=367
-==&gt;SING ME BACK HOME=114
-==&gt;LOOSE LUCY=293
-==&gt;BERTHA=460
-==&gt;BIG RIVER=357
-==&gt;BROKEDOWN PALACE=218
-==&gt;DONT EASE ME IN=475
-==&gt;BIRD SONG=403
+==&gt;CHINA CAT SUNFLOWER=518
+==&gt;RAMBLE ON ROSE=527
+==&gt;WHARF RAT=213
+==&gt;HES GONE=439
+==&gt;HURTS ME TOO=112
+==&gt;SHIP OF FOOLS=345
+==&gt;FRIEND OF THE DEVIL=378
+==&gt;IT MUST HAVE BEEN THE ROSES=371
+==&gt;JACK STRAW=540
+==&gt;MEXICALI BLUES=369
+==&gt;CANDYMAN=345
+==&gt;LOOKS LIKE RAIN=471
+==&gt;DIRE WOLF=341
+==&gt;HELP ON THE WAY=245
 ...
 gremlin&gt; println g.v(12).out.groupCount(m){it.name}.loop(2){c++ &lt; 1000}
 [StartPipe, LoopPipe([OutPipe, GroupCountFunctionPipe])]
@@ -115,7 +116,7 @@ gremlin&gt; println g.v(12).out.groupCount(m){it.name}.loop(2){c++ &lt; 1000}
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

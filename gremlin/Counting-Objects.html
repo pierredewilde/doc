@@ -90,9 +90,9 @@ gremlin&gt; g.v(1).out.groupCount(m){it}{it.b+1.0}.out.groupCount(m){it}{it.b+0.
 ==&gt;v[3]
 gremlin&gt; m
 ==&gt;v[2]=1.0
-==&gt;v[3]=1.5
 ==&gt;v[4]=1.0
-==&gt;v[5]=0.5</code></pre>
+==&gt;v[5]=0.5
+==&gt;v[3]=1.5</code></pre>
 <p>In the above example, the second closure is called the value-closure and the <code>it</code> is a <code>Pair&lt;A,B&gt;</code> with two methods: <code>getA()</code> and <code>getB()</code>. For <code>groupCount</code>, the <code>A</code> of the pair is the object flowing through the <code>groupCount</code> pipe and the <code>B</code> is the previous value of the key.</p>
     </div>
   </div>
@@ -100,7 +100,7 @@ gremlin&gt; m
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

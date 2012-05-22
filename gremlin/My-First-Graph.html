@@ -58,9 +58,9 @@ gremlin&gt; g = new Neo4jGraph('/tmp/deadgraph')
 ==&gt;neo4jgraph[EmbeddedGraphDatabase [/tmp/deadgraph]]
 gremlin&gt; g.loadGraphML('data/graph-example-2.xml')
 ==&gt;null
-gremlin&gt; g.idx(T.v)[[name:'DARK STAR']]
+gremlin&gt; g.V('name','DARK STAR')
 ==&gt;v[165]
-gremlin&gt; g.idx(T.v)[[name:'DARK STAR']].outE
+gremlin&gt; g.V('name','DARK STAR').outE
 ==&gt;e[3914][165-followed_by-&gt;84]
 ==&gt;e[3915][165-followed_by-&gt;20]
 ==&gt;e[3916][165-followed_by-&gt;97]
@@ -105,7 +105,7 @@ gremlin&gt; g.shutdown()
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

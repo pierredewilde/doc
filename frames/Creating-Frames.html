@@ -50,24 +50,24 @@
   <div class="wrap">
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
-      <p>When you develop a Frames-annotation Java interface, you provide it &#x201C;life&#x201D; by binding it to the underlying <a href="../blueprints/Home.html">Blueprints</a> graph. To make this binding, the <code>FramesManager</code> is used. In <code>FramesManager</code> there a collection of helpful methods which are articulate using the toy graph diagrammed below and the example Java code.</p>
+      <p>When you develop a Frames-annotation Java interface, you provide it &#x201C;life&#x201D; by binding it to the underlying <a href="../blueprints/Home.html">Blueprints</a> graph. To make this binding, the <code>FramedGraph</code> is used. In <code>FramedGraph</code> there are a collection of helpful methods which are demonstrated using the toy graph diagrammed below and the example Java code.</p>
 <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/graph-example-1.jpg" width="450px" /></p>
 <pre><code>Graph graph = ... // get a reference to the graph
-FramesManager manager = new FramesManager(graph); // create a manager for the graph
+FramedGraph&lt;Graph&gt; framedGraph = new FramedGraph&lt;Graph&gt;(graph); // wrap the base graph
 
-Person marko = manager.frame(graph.getVertex(1), Person.class);
-Person peter = manager.frameVertex(6, Person.class);
-Iterable&lt;Project&gt; javaProjects = manager.frameVertices(graph.getVertices("lang","java"), Project.class);
+Person marko = framedGraph.getVertex(1, Person.class);
+Person peter = framedGraph.getVertex(6, Person.class);
+Iterable&lt;Project&gt; javaProjects = framedGraph.getVertices("lang","java", Project.class);
 
-Knows markoKnowsVadas = manager.frame(graph.getEdge(7), Direction.OUT, Knows.class);
-Knows markoKnowsJosh = manager.frameEdge(8, Direction.OUT, Knows.class);</code></pre>
+Knows markoKnowsVadas = framedGraph.getEdge(7, Direction.OUT, Knows.class);
+Knows markoKnowsJosh = framedGraph.getEdge(8, Direction.OUT, Knows.class);</code></pre>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-16 20:26:04</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-21 18:21:17</p>
 </div>
 </div>
 

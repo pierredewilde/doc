@@ -56,16 +56,30 @@
 	<li><code>N</code> : maximum number of loops</li>
 </ul><h2>To find all paths in a directed graph:</h2>
 <pre><code>g.v(A).out.loop(1){it.loops&lt;=N &amp;&amp; !(it.object.id in [A,B])}.filter{it.id==B}.path</code></pre>
+<p>Example: find path between marko and ripple using sample TinkerGraph</p>
+<pre><code>gremlin&gt; g = TinkerGraphFactory.createTinkerGraph()
+==&gt;tinkergraph[vertices:6 edges:6]
+gremlin&gt; A='1';B='5';N=3
+gremlin&gt; g.v(A).out.loop(1){it.loops&lt;=N &amp;&amp; !(it.object.id in [A,B])}.filter{it.id==B}.path
+==&gt;[v[1], v[4], v[5]]</code></pre>
+<p>Notice that <code>A</code> and <code>B</code> are strings, not integers. To check it:</p>
+<pre><code>gremlin&gt; g.v(1).id.class
+==&gt;class java.lang.String</code></pre>
 <h2>To find all paths in an undirected graph:</h2>
 <pre><code>g.v(A).both.loop(1){it.loops&lt;=N &amp;&amp; !(it.object.id in [A,B])}.filter{it.id==B}.path</code></pre>
-<p>See examples at <a href="https://gist.github.com/1156323">https://gist.github.com/1156323</a></p>
+<p>Using the same example:</p>
+<pre><code>gremlin&gt; A='1';B='5';N=3
+gremlin&gt; g.v(A).both.loop(1){it.loops&lt;=N &amp;&amp; !(it.object.id in [A,B])}.filter{it.id==B}.path
+==&gt;[v[1], v[4], v[5]]
+==&gt;[v[1], v[3], v[4], v[5]]</code></pre>
+<p>See more examples at <a href="https://gist.github.com/1156323">https://gist.github.com/1156323</a></p>
     </div>
   </div>
   </div>
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

@@ -65,6 +65,8 @@ new GremlinPipeline(g).V()</code></pre>
 new GremlinPipeline(g.getVertex(1)).out("knows")</code></pre>
 <p><strong>Iterate through the names of all the vertices that vertex 1 knows</strong><br /></p><pre><code>g.v(1).out('knows').name
 new GremlinPipeline(g.getVertex(1)).out("knows").property("name")</code></pre>
+<p><strong>Iterate through the names of all the vertices that vertex 1 knows whose age is greater than 30</strong><br /></p><pre><code>g.v(1).out('knows').has('age',T.gt,30).name
+new GremlinPipeline(g.getVertex(1)).out("knows").has("age",T.gt,30).property("name")</code></pre>
 <p><strong>Iterate though all vertices that vertex 1 knows whose name starts with &#x2018;j&#x2019;</strong><br /></p><pre><code>g.v(1).out.filter{it.name.startsWith('j')}
 
 new GremlinPipeline(g.getVertex(1)).out().filter(new PipeFunction&lt;Vertex,Boolean&gt;() { 
@@ -89,7 +91,7 @@ new GremlinPipeline(g.getVertex(1)).outE().store(x, new PipeFunction&lt;Edge,Dou
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 

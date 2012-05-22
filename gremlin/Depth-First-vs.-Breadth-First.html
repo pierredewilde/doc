@@ -84,7 +84,7 @@ gremlin&gt; g.v(1).outE('created').inV.inE('created').outV
 <p>The <code>gather</code> step is used to aggregate all the results of the previous step into a list. Given that <code>gather</code> exhausts all the objects of the previous step and emits a list. The <code>scatter</code> step is used to unroll that list and pass it to the next step.</p>
 <p>With <code>gather</code>, the generated list can be analyzed by a step to determine some desired property that is a function of all current objects in the breadth of the path. For example.</p>
 <pre><code>gremlin&gt; g.v(1).outE.gather{ println "processing: ${it}"; return it.get(0) }.inV
-processing: [e[7][1-knows-&gt;2], e[9][1-created-&gt;3], e[8][1-knows-&gt;4]]
+processing: [e[7][1-knows-&gt;2], e[8][1-knows-&gt;4], e[9][1-created-&gt;3]]
 ==&gt;v[2]</code></pre>
 <p>Note that with breadth-first traverse being controlled by the <code>gather</code> step, its possible to intermix the use of depth- and breadth-first traversing in a single path expression. In other words, its not necessary to gather all results from the previous step at every step. In fact, its only necessary when all objects of a particular part of the path expression are needed in a computation.</p>
     </div>
@@ -93,7 +93,7 @@ processing: [e[7][1-knows-&gt;2], e[9][1-created-&gt;3], e[8][1-knows-&gt;4]]
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-17 00:04:03</p>
+  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
 </div>
 </div>
 
