@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Rexster Implementation</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.0.0</a> - <a href="Home.html">Blueprints</a></h3>
+  <h1>Rexster Implementation</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Rexster-Implementation"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Rexster-Implementation"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-logo.png" alt="" /></p>
+<pre><code>&lt;dependency&gt;
+   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+   &lt;artifactId&gt;blueprints-rexster-graph&lt;/artifactId&gt;
+   &lt;version&gt;??&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<p><a href="../../rexster/2.0.0/Home.html">Rexster</a> is a RESTful graph shell that exposes any Blueprints graph through a standalone <span class="caps">HTTP</span> server. <code>RexsterGraph</code> talks to a Rexster-exposed graph via the <a href="../../rexster/2.0.0/Basic-REST-API.html">Rexster RESTful <span class="caps">API</span></a>. Thus, <code>RexsterGraph</code> can be used to communicate with a remote graph with complete <span class="caps">HTTP</span>-transparency to the user. <code>RexsterGraph</code> is composed of <span class="caps">HTTP</span> calls (through <code>java.net.*</code>) and <a href="http://json.org/"><span class="caps">JSON</span></a> parsing.</p>
+<pre><code>Graph graph = new RexsterGraph("http://localhost:8182/graphs/tinkergraph");</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-24 16:44:49</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>My First Graph</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.0.0</a> - <a href="Home.html">Gremlin</a></h3>
+  <h1>My First Graph</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/My-First-Graph"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/My-First-Graph"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>An example of loading a <code>Neo4jGraph</code> with data, using an index to retrieve a vertex, and traversing one step out from that vertex.</p>
+<pre><code>         \,,,/
+         (o o)
+-----oOOo-(_)-oOOo-----
+gremlin&gt; g = new Neo4jGraph('/tmp/deadgraph')
+==&gt;neo4jgraph[EmbeddedGraphDatabase [/tmp/deadgraph]]
+gremlin&gt; g.loadGraphML('data/graph-example-2.xml')
+==&gt;null
+gremlin&gt; g.V('name','DARK STAR')
+==&gt;v[165]
+gremlin&gt; g.V('name','DARK STAR').outE
+==&gt;e[3914][165-followed_by-&gt;84]
+==&gt;e[3915][165-followed_by-&gt;20]
+==&gt;e[3916][165-followed_by-&gt;97]
+==&gt;e[3917][165-followed_by-&gt;96]
+==&gt;e[3918][165-followed_by-&gt;4]
+==&gt;e[3919][165-followed_by-&gt;18]
+==&gt;e[3920][165-followed_by-&gt;89]
+==&gt;e[3921][165-followed_by-&gt;26]
+==&gt;e[3922][165-followed_by-&gt;92]
+==&gt;e[3923][165-followed_by-&gt;17]
+==&gt;e[3924][165-followed_by-&gt;14]
+==&gt;e[3925][165-followed_by-&gt;103]
+==&gt;e[3926][165-followed_by-&gt;105]
+==&gt;e[3927][165-followed_by-&gt;88]
+==&gt;e[3928][165-followed_by-&gt;79]
+==&gt;e[3929][165-followed_by-&gt;196]
+==&gt;e[3930][165-followed_by-&gt;181]
+==&gt;e[3931][165-followed_by-&gt;15]
+==&gt;e[3932][165-followed_by-&gt;95]
+==&gt;e[3933][165-followed_by-&gt;69]
+==&gt;e[3934][165-followed_by-&gt;232]
+==&gt;e[3935][165-followed_by-&gt;64]
+==&gt;e[3936][165-followed_by-&gt;93]
+==&gt;e[3937][165-followed_by-&gt;5]
+==&gt;e[3938][165-followed_by-&gt;11]
+==&gt;e[3939][165-followed_by-&gt;24]
+==&gt;e[3940][165-followed_by-&gt;35]
+==&gt;e[3941][165-followed_by-&gt;131]
+==&gt;e[3942][165-followed_by-&gt;192]
+==&gt;e[3943][165-followed_by-&gt;68]
+==&gt;e[3944][165-followed_by-&gt;80]
+==&gt;e[3945][165-followed_by-&gt;36]
+==&gt;e[3946][165-followed_by-&gt;144]
+==&gt;e[3947][165-followed_by-&gt;125]
+==&gt;e[3912][165-sung_by-&gt;9]
+==&gt;e[3913][165-written_by-&gt;94]
+gremlin&gt; g.shutdown()
+==&gt;null</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-24 17:40:57</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Counting Objects</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.0.0</a> - <a href="Home.html">Gremlin</a></h3>
+  <h1>Counting Objects</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Counting-Objects"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Counting-Objects"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>The examples below use the toy graph diagrammed in <a class="internal present" href="Defining-a-Property-Graph.html">Defining a Property Graph</a> and is loaded as follows:</p>
+<pre><code>gremlin&gt; g = TinkerGraphFactory.createTinkerGraph()
+==&gt;tinkergraph[vertices:6 edges:6]</code></pre>
+<h2>Basic Object Counting</h2>
+<p>Given a path expression, how many objects are touched at the end of that expression? This problem is easily solved using <code>Pipe.count()</code>.</p>
+<pre><code>gremlin&gt; g.V.count()
+==&gt;6
+gremlin&gt; g.v(1).outE.count()
+==&gt;3</code></pre>
+<p>Here is another problem: How many objects are touched midway through an expression? This problem is solved using <code>foreach{}</code>. The example below increments the counter <code>c</code> for all objects that pass through the first <code>outE</code> step. Thus, while the end of this expression yields only 2 objects, in the middle of the expression (after <code>outE</code>), there are 3.</p>
+<pre><code>gremlin&gt; c = 0  
+==&gt;0
+gremlin&gt; g.v(1).outE.sideEffect{c++}.inV.outE.inV
+==&gt;v[5]
+==&gt;v[3]
+gremlin&gt; c
+==&gt;3</code></pre>
+<h2>Using groupCount Effectively</h2>
+<p>In many situations, it is desirable to know how many times a particular object has been traversed over. This calculation is made easy with <code>groupCount</code>. The generic use of <code>groupCount</code> will maintain a <code>Map&lt;Object,Long&gt;</code> that keeps track of how many times an element has been traversed over.</p>
+<p>The first example demonstrates the use of basic counter updating. Every time an object goes through <code>groupCount</code> its <code>Map</code> counter is updated by <code>1</code>.</p>
+<pre><code>gremlin&gt; m = [:]
+gremlin&gt; g.V.out.groupCount(m) // .out is equivalent to .outE.inV
+==&gt;v[2]
+==&gt;v[3]
+==&gt;v[4]
+==&gt;v[3]
+==&gt;v[5]
+==&gt;v[3]
+gremlin&gt; m
+==&gt;v[2]=1
+==&gt;v[3]=3
+==&gt;v[4]=1
+==&gt;v[5]=1</code></pre>
+<p>Next, it is possible to dynamically alter the counting method by providing a closure to <code>groupCount</code>. This is useful for simulating an energy diffusion over the graph. That is, where as more steps progress, the energy decays. Every time an object passes through <code>groupCount</code>, the provided closure is called with <code>it</code> set to the current value of the object in the <code>Map</code> and with the return of the closure being the new value for the <code>Map</code>. Note that <code>m</code> is defined as <code>[:].withDefaultValue{0}</code> so that a <code>null</code> check is not required (a handy trick).</p>
+<pre><code>gremlin&gt; m = [:].withDefault{0}
+gremlin&gt; g.v(1).out.groupCount(m){it}{it.b+1.0}.out.groupCount(m){it}{it.b+0.5}
+==&gt;v[5]
+==&gt;v[3]
+gremlin&gt; m
+==&gt;v[2]=1.0
+==&gt;v[4]=1.0
+==&gt;v[5]=0.5
+==&gt;v[3]=1.5</code></pre>
+<p>In the above example, the second closure is called the value-closure and the <code>it</code> is a <code>Pair&lt;A,B&gt;</code> with two methods: <code>getA()</code> and <code>getB()</code>. For <code>groupCount</code>, the <code>A</code> of the pair is the object flowing through the <code>groupCount</code> pipe and the <code>B</code> is the previous value of the key.</p>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-24 17:40:57</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

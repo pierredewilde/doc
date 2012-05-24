@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Emitting Collections</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.0.0</a> - <a href="Home.html">Gremlin</a></h3>
+  <h1>Emitting Collections</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Emitting-Collections"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Emitting-Collections"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>A common use case is to explore and emit two paths at the same time. Using the simple toy graph diagrammed in <a class="internal present" href="Defining-a-Property-Graph.html">Defining a Property Graph</a>, an example is provided below.</p>
+<pre><code>gremlin&gt; g = TinkerGraphFactory.createTinkerGraph()
+==&gt;tinkergraph[vertices:6 edges:6]
+gremlin&gt; g.V.transform{[it.name, it.out.name.toList()]}
+==&gt;[lop, []]
+==&gt;[vadas, []]
+==&gt;[marko, [vadas, lop, josh]]
+==&gt;[peter, [lop]]
+==&gt;[ripple, []]
+==&gt;[josh, [ripple, lop]]</code></pre>
+<p>This <code>transform</code> above creates an array that contains the vertex name and the name of the vertices connected to that vertex.</p>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-24 17:40:57</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Release Notes</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.0.0</a> - <a href="Home.html">Frames</a></h3>
+  <h1>Release Notes</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Release-Notes"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Release-Notes"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>Frames: An Object to Graph Framework<br /><a href="../../frames/2.0.0/Home.html">http://frames.tinkerpop.com</a></p>
+<h2>Frames 2.y.z</h2>
+<p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-2.png" alt="" /></p>
+<h3>Version 2.0.0 (May 23, 2012)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Removed <code>Direction</code> as now Blueprints <code>Direction</code> enum is used</li>
+	<li>Compressed the number of classes with anonymous inner classes for <code>Iterators</code></li>
+	<li>Renamed <code>Adjacency</code> to <code>Incidence</code> for vertex-edge connections</li>
+	<li>Renamed <code>Relation</code> to <code>Adjacency</code> for vertex-vertex connections</li>
+	<li><code>FramesManager</code> is replaced by <code>FramedGraph implements WrapperGraph</code></li>
+	<li><code>Collection</code> no longer supported, only <code>Iterable</code> as this is the true underlying representation</li>
+</ul><hr /><h2>Frames 0.x</h2>
+<p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-bracket.png" alt="" /></p>
+<h3>Version 0.7 (Bracket &#x2014; February 28, 2012)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.7&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Added support for registering annotations</li>
+	<li>Added more <code>frame</code>-based methods to <code>FramesManager</code></li>
+	<li>Added support for inference determined by a <code>GremlinGroovy</code> annotation</li>
+	<li>Added helper method <code>FramesManager.createFramedVertex()</code></li>
+</ul><hr /><p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-truss.png" alt="" /></p>
+<h3>Version 0.6 (Truss &#x2014; December 7, 2011)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.6&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<hr /><p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-beams.png" alt="" /></p>
+<h3>Version 0.5 (Beams &#x2014; September 18, 2011)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.5&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<hr /><p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-studs.png" alt="" /></p>
+<h3>Version 0.4 (Studs &#x2014; August 1, 2011)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.4&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Added &#x2018;set to null&#x2019; / &#x2018;remove all&#x2019; functionality for functional relations.</li>
+	<li>Added <code>VertexFrame</code> and <code>EdgeFrame</code> interfaces to provide access to underlying vertices and edges of frames.</li>
+	<li>Extended <code>Relation</code> support to both multiple-valued and single-valued (functional) relations.</li>
+</ul><hr /><p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-lumber.png" alt="" /></p>
+<h3>Version 0.3 (Lumber &#x2014; June 11, 2011)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.3&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Added JavaDoc</li>
+</ul><hr /><p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-huff-and-puff.png" alt="" /></p>
+<h3>Version 0.2 (Huff and Puff &#x2014; May 8, 2011)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.2&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Added JavaDoc</li>
+</ul><hr /><p><img src="https://github.com/tinkerpop/frames/raw/master/doc/images/frames-brick-by-brick.png" alt="" /></p>
+<h3>Version 0.1 (Brick By Brick &#x2014; April 4, 2011)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames&lt;/artifactId&gt;
+  &lt;version&gt;0.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Initial release of the project</li>
+</ul>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-24 17:29:33</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>
