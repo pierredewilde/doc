@@ -11,6 +11,6 @@ h1. TinkerPop 2.0.0 Documentation
 * "Furnace":http://furnace.tinkerpop.com: A property graph algorithms package
 * "Rexster":http://rexster.tinkerpop.com: A graph server
 
-TinkerPop documentation is generated from GitHub TinkerPop wikis by converting them into .html files using "gollum":https://github.com/github/gollum
+TinkerPop documentation generated from GitHub TinkerPop wikis to .html files with "gollum":https://github.com/github/gollum
 
-Last update: 2012-05-22
+Last update: 2012-05-24

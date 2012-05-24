@@ -50,14 +50,47 @@
   <div class="wrap">
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
-      <p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/blueprints-bluesky.png" alt="" /></p>
+      <p>Blueprints: A Property Graph Model Interface<br /><a href="../blueprints/Home.html">http://blueprints.tinkerpop.com</a></p>
+<h2>Blueprints 2.y.z</h2>
+<p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/blueprints-2.png" alt="" /></p>
+<h3>Version 2.0.0 (May 23, 2012)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+  &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li>Added a var args based <code>ElementHelper.setProperties()</code> method</li>
+	<li>Added <span class="caps">GML</span> Reader/Writer utility</li>
+	<li>Bumped to support Neo4j 1.8.M02</li>
+	<li><code>RexsterGraph</code> supports Rexster Authentication</li>
+	<li><code>Neo4jElement</code> will accept a <code>Collection</code> as a property (as long as all items within it are of the same data type), internally converting it to an array for storage in Neo4j</li>
+	<li>Fixed a couple of <span class="caps">API</span> naming convention errors in <code>PartitionGraph</code></li>
+	<li>Updated core <code>Vertex</code> <span class="caps">API</span> to support the notion of &#x2018;push down predicates&#x2019; (lower level element filtering)</li>
+	<li>Added internal support for Neo4j&#x2019;s <code>Node</code> var args of <code>RelationshipTypes</code></li>
+	<li>Speed improvements to the much used <code>MultiIterable</code></li>
+	<li>Removed <code>CloseableSequence</code> and replaced with <code>CloseableIterable</code> (now real Java <code>Iterable</code> semantics respected)</li>
+	<li>Redesign to <code>IndexableGraph</code> where <code>AutomaticIndex</code> no longer exists as is default</li>
+	<li>Introduced new interface called <code>KeyIndexedGraph</code> for basic key/value property indexing</li>
+	<li>Reduce the number of vertices/edges created in various test suites to speed up testing</li>
+	<li>Added <code>Features</code> so developers can learn about the various quirks of any <code>Graph</code> implementation</li>
+	<li>Support for Neo4j&#x2019;s native automatic indices in <code>Neo4jGraph</code></li>
+	<li>Support for Neo4j&#x2019;s native automatic indices in <code>Neo4jBatchGraph</code></li>
+	<li>Added <code>ExceptionFactory</code> so all exceptions have the same message and type amongst graph implementations</li>
+	<li>Removed superfluous <code>util</code> packages on all <code>Graph</code> implementations</li>
+	<li><code>EventGraph</code> wrapper set now includes <code>EventTransactionalGraph</code> which will fire queued sets of events in conjunction with successful commits to the graph.</li>
+	<li>Added <code>IdGraph</code> to support the user defined ids for those <code>Graphs</code> that ignore user supplied ids</li>
+	<li>Added <code>ThreadTransactionalGraph</code> to support multiple threads within a single transaction</li>
+	<li>Changed the <code>Vertex</code> <span class="caps">API</span> to only have three methods: <code>getEdges()</code>, <code>getVertices()</code>, and <code>query()</code></li>
+	<li>Bumped to support Orient 1.0.1</li>
+	<li>Added <code>BatchGraph</code> to support bulk loading of data</li>
+</ul><hr /><h2>Blueprints 1.x</h2>
+<p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/blueprints-bluesky.png" alt="" /></p>
 <h3>Version 1.2 (Blue Sky &#x2014; February 28, 2012)</h3>
 <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;1.2&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 1.2 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/1.2/api">JavaDocs</a></p>
 <ul><li>Fixed <code>Neo4jGraph</code> index object caching bug which was made salient with multiple threads</li>
 	<li>Fixed <code>SailGraph</code> to now commit transactions on shutdown</li>
 	<li>Updated <code>Neo4jGraph</code> to use <code>GlobalGraphOperations</code> methods for <code>getAllNodes()</code> and <code>getAllRelationships()</code></li>
@@ -78,13 +111,12 @@
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;1.1&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 1.1 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/1.1/api">JavaDocs</a></p>
 <ul><li>Fixed index consistency issue in <code>OrientGraph</code></li>
 	<li>Added <code>Neo4jHaGraph</code> allowing a more direct way to utilize Neo4j High Availability mode</li>
 	<li>General <span class="caps">API</span> consistency improvements
 	<ul><li>Graphs attempt to create directories structures for graph persistence</li>
-		<li>GetVertex/Edge throw <code>IllegalArgumentException</code> if passed a null identifier as a parameter.</li>
-		<li>GetVertex/Edge return <code>null</code> if the element cannot be found, if the identifier does not match the expected format of the underlying graph database or if the underlying graph database throws exceptions during the lookup.</li>
+		<li>GetVertex/Edge throw <code>IllegalArgumentException</code> if passed a null identifier as a parameter</li>
+		<li>GetVertex/Edge return <code>null</code> if the element cannot be found, if the identifier does not match the expected format of the underlying graph database or if the underlying graph database throws exceptions during the lookup</li>
 	</ul></li>
 	<li><code>RexsterGraph</code> utilizes the <code>application/vnd.rexster.typed+json</code> custom mime type</li>
 	<li>The <code>EventGraph.addEdge()</code> method now properly fires the <code>onEdgeAdded</code> event with improved test cases</li>
@@ -100,7 +132,6 @@
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 1.0 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/1.0/api">JavaDocs</a></p>
 <ul><li>Bumped to support Neo4j 1.5.M01</li>
 	<li>Bumped to support OrientDB 1.0rc5</li>
 	<li><code>RexsterGraph</code> uses the actual count <span class="caps">REST</span> <span class="caps">API</span> instead of pulling back all results first and checking size</li>
@@ -112,14 +143,14 @@
 	<li>Fixed a <code>ConcurrentModificationException</code> in <code>TinkerGraph</code> and added respective test cases for all graphs</li>
 	<li>Added <code>StringFactory.graphString()</code> for a unified <code>String</code> representation of a Blueprints graph</li>
 	<li>Added <code>Neo4jBatchGraph</code> to support bulk inserting of graph data into a Neo4j instance</li>
-</ul><hr /><p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/blueprints-marvin.png" alt="" /></p>
+</ul><h2>Blueprints 0.x</h2>
+<p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/blueprints-marvin.png" alt="" /></p>
 <h3>Version 0.9 (Marvin &#x2014; August 1, 2011)</h3>
 <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;0.9&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.9 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.9/api">JavaDocs</a></p>
 <ul><li>Updated Vertex <span class="caps">API</span> to have <code>getOutEdges(String...)</code> and <code>getInEdges(String...)</code></li>
 	<li>Updated <code>TinkerGraph</code> to be <code>ConcurrentModificationException</code> safe</li>
 	<li>Bumped to support Neo4j 1.4</li>
@@ -139,7 +170,6 @@
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;0.8&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.8 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.8/api">JavaDocs</a></p>
 <ul><li>Added <code>EventGraph</code> implementation</li>
 	<li><code>RexsterGraph</code> improvements
 	<ul><li>Use of <span class="caps">POST</span> for <span class="caps">REST</span> Service Requests</li>
@@ -148,7 +178,7 @@
 	<li>Change <span class="caps">JSON</span> library from json-simple to jettison to be more in line with the rest of the TinkerPop stack.</li>
 	<li>A more robust implementation of the <code>TransactionalGraph</code> implementation for <code>Neo4jGraph</code>, <code>OrientGraph</code>, and <code>SailGraph</code>.</li>
 	<li>Bumped to Neo4j 1.4.M04</li>
-	<li>Bumped to Orient 1.0rc2</li>
+	<li>Bumped to Orient 1.0rc2-<span class="caps">SNAPSHOT</span></li>
 	<li>Bumped to Sail 2.4.0</li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/blueprints/raw/master/doc/images/blueprints-patrick.png" alt="" /></p>
 <h3>Version 0.7 (Patrick &#x2014; May 8, 2011)</h3>
@@ -157,7 +187,6 @@
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;0.7&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.7 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.7/api">JavaDocs</a></p>
 <ul><li>Updated <code>RexsterGraph</code> to work with latest Rexster <span class="caps">REST</span> <span class="caps">API</span> changes</li>
 	<li>Bumped to Neo4j 1.4.M01</li>
 	<li>Bumped to OrientDB 1.0rc1</li>
@@ -169,7 +198,6 @@
   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
   &lt;version&gt;0.6&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.6 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/blueprints/0.6/api">JavaDocs</a></p>
 <ul><li>Refactored to create a Maven multiproject with one module per major Blueprints component</li>
 	<li>Added <code>DexGraph</code> implementation (<a href="http://www.sparsity-technologies.com/">Sparsity Technologies</a>)</li>
 	<li>Bumped to OrientDB 1.0rc1-<span class="caps">SNAPSHOT</span></li>
@@ -184,7 +212,6 @@
   &lt;artifactId&gt;blueprints&lt;/artifactId&gt;
   &lt;version&gt;0.5&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.5 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.5/api">JavaDocs</a></p>
 <ul><li>Updated index model
 	<ul><li>Changed the <span class="caps">API</span> and semantics of <code>AutomaticIndex</code></li>
 		<li>Changed the <span class="caps">API</span> of <code>IndexableGraph</code></li>
@@ -211,8 +238,7 @@
   &lt;artifactId&gt;blueprints&lt;/artifactId&gt;
   &lt;version&gt;0.4&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.4 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.4/api/">JavaDocs</a></p>
-<ul><li>Added Support for Neo4j 1.2</li>
+<ul><li>Added support for Neo4j 1.2</li>
 	<li>Added edge label indexing to <code>AutomaticIndex</code></li>
 	<li>Added concept of &#x201C;ouplementation&#x201D;
 	<ul><li>Repackaged <span class="caps">JUNG</span> ouplementation as <code>GraphJung</code></li>
@@ -228,7 +254,6 @@
   &lt;artifactId&gt;blueprints&lt;/artifactId&gt;
   &lt;version&gt;0.3&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.3 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.3/api/">JavaDocs</a></p>
 <ul><li>Moved to <code>graphdb-deps-*</code> database dependency management model
 	<ul><li>Neo4j 1.2.M05</li>
 		<li>OrientDB 0.9.24.1</li>
@@ -263,15 +288,14 @@
   &lt;artifactId&gt;blueprints&lt;/artifactId&gt;
   &lt;version&gt;0.2&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.2 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.2/api/">JavaDocs</a></p>
 <ul><li>Removed Blueprints Pipes <span class="caps">BETA</span> and put it into a separate project</li>
 	<li><code>Neo4jGraph</code> constructor can be passed in a Neo4j properties map</li>
 	<li><code>Neo4jGraph</code> constructor can be passed in a live <code>GraphDatabaseService</code></li>
 	<li>Updated <code>GraphMLWriter</code> to write all vertices and then all edges</li>
 	<li>Added <span class="caps">RDF</span> load functionality to <code>SailGraph</code></li>
-	<li>Added <span class="caps">SPARQL</span> functioanlity to <code>SailGraph</code></li>
+	<li>Added <span class="caps">SPARQL</span> functionality to <code>SailGraph</code></li>
 	<li>Fixed sever <code>GraphMLReader</code> bug</li>
-	<li>Added OrientDB (OrientGraph) as a property graph implementation</li>
+	<li>Added OrientDB (<code>OrientGraph</code>) as a property graph implementation</li>
 	<li>Added support for <code>Graph.getEdge(Object id)</code></li>
 	<li>Added support for <code>kind</code> in the Sail implementation of Blueprints</li>
 	<li>Made iterating edges in <code>SailGraph</code> faster and more memory efficient</li>
@@ -283,11 +307,10 @@
   &lt;artifactId&gt;blueprints&lt;/artifactId&gt;
   &lt;version&gt;0.1.1&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.1.1 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.1.1/api/">JavaDocs</a></p>
 <ul><li>Added Blueprints Pipes <span class="caps">BETA</span> to the distribution</li>
 	<li>Changed all the OpenRDF Sesame dependencies to version 2.3.1</li>
 	<li>Added performance timing printouts to model test cases</li>
-	<li>Neo4j depedency was changed for 1.0-rc to 1.0</li>
+	<li>Neo4j dependency was changed for 1.0-rc to 1.0</li>
 	<li>Added object document interfaces</li>
 	<li>Added TinkerDoc implementation of the object document interfaces</li>
 	<li>Added MongoDB implementation of the object document interfaces</li>
@@ -297,7 +320,6 @@
   &lt;artifactId&gt;blueprints&lt;/artifactId&gt;
   &lt;version&gt;0.1&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
-<p>Blueprints 0.1 <a href="http://tinkerpop.com/maven2/com/tinkerpop/blueprints/0.1/api/">JavaDocs</a></p>
 <ul><li>Initial release providing the property graph model</li>
 	<li>Code originally packaged with <a href="../gremlin/Home.html">Gremlin</a></li>
 </ul>
@@ -307,7 +329,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>sgomezvillamor</b>, 2012-05-22 09:02:07</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-24 15:24:43</p>
 </div>
 </div>
 

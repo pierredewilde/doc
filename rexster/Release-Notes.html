@@ -50,31 +50,28 @@
   <div class="wrap">
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
-      <p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-santas-little-helper.png" alt="" /></p>
+      <p>Rexster: A Graph Server<br /><a href="../rexster/Home.html">http://rexster.tinkerpop.com</a></p>
+<h2>Rexster 0.y.z</h2>
+<p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-2.png" alt="" /></p>
+<h3>Version 2.0.0 (May 23, 2012)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop.rexster&lt;/groupId&gt;
+  &lt;artifactId&gt;rexster&lt;/artifactId&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<ul><li><span class="caps">REST</span> <span class="caps">API</span> for POSTing new indices supports <code>params</code> argument which constructs a parameter map which will configure the newly created index</li>
+	<li>The <span class="caps">DELETE</span> operation for the Graph resource has been removed since Blueprints no longer supports <code>Graph.clear()</code></li>
+	<li>The Index resource no longer has a <code>keys</code> sub-resource nor the notion of &#x201C;automatic&#x201D; or &#x201C;manual&#x201D; indices due to changes in the Blueprints <span class="caps">API</span></li>
+	<li>Add metadata from graph <code>Features</code> to the Graph resource</li>
+	<li><code>KeyIndexResource</code> to access features of <code>KeyIndexableGraph</code> instances</li>
+	<li><code>VertexResource</code> and <code>EdgeResource</code> support key index filtering</li>
+	<li>Improved messaging to the server console regarding which <code>rexster.xml</code> file is being loaded</li>
+</ul><hr /><h2>Rexster 0.x</h2>
+<p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-santas-little-helper.png" alt="" /></p>
 <h3>Version 0.8 (Santa&#x2019;s Little Helper &#x2014; February 28, 2012)</h3>
 <pre><code>&lt;dependency&gt;
-  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;groupId&gt;com.tinkerpop.rexster&lt;/groupId&gt;
   &lt;artifactId&gt;rexster&lt;/artifactId&gt;
-  &lt;version&gt;0.8&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
-  &lt;artifactId&gt;batch-kibble&lt;/artifactId&gt;
-  &lt;version&gt;0.8&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
-  &lt;artifactId&gt;frames-kibble&lt;/artifactId&gt;
-  &lt;version&gt;0.8&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
-  &lt;artifactId&gt;sample-kibbles&lt;/artifactId&gt;
-  &lt;version&gt;0.8&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
-  &lt;artifactId&gt;sparql-kibble&lt;/artifactId&gt;
   &lt;version&gt;0.8&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 <ul><li>Added <code>PUT</code> to the Indices resource to place elements in an index.  This changes split this functionality away from <code>POST</code>.  <code>POST</code> is now only for creating new indices.</li>
@@ -101,7 +98,7 @@
 	</ul></li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-brian.png" alt="" /></p>
 <h3>Version 0.7 (Brian &#x2014; December 7, 2011)</h3>
-<pre><code> &lt;dependency&gt;
+<pre><code>&lt;dependency&gt;
   &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
   &lt;artifactId&gt;rexster&lt;/artifactId&gt;
   &lt;version&gt;0.7&lt;/version&gt;
@@ -126,16 +123,40 @@
 	</ul></li>
 	<li>Dog House is kinder to SailGraph implementations (generally cosmetic changes).</li>
 	<li>Rexster Console only hosts Gremlin-flavored script engine implementations.  Currently, that means that <code>gremlin-groovy</code> is the only exposed language.</li>
+	<li>Upgrade all Kibbles to use GraphSON.</li>
+	<li>Sample Kibble
+	<ul><li>New Parameters Sample Kibble shows how to deal with injecting different data types into the request.</li>
+	</ul></li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-dalmatian.png" alt="" /></p>
 <h3>Version 0.6 (Dalmatian &#x2014; September 18, 2011)</h3>
-<pre><code> &lt;dependency&gt;
+<pre><code>&lt;dependency&gt;
   &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
   &lt;artifactId&gt;rexster&lt;/artifactId&gt;
+  &lt;version&gt;0.6&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;batch-kibble&lt;/artifactId&gt;
+  &lt;version&gt;0.6&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;frames-kibble&lt;/artifactId&gt;
+  &lt;version&gt;0.6&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;sample-kibbles&lt;/artifactId&gt;
+  &lt;version&gt;0.6&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop&lt;/groupId&gt;
+  &lt;artifactId&gt;sparql-kibble&lt;/artifactId&gt;
   &lt;version&gt;0.6&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 <ul><li>Support for High Availability mode of Neo4j</li>
 	<li>The <code>rexster-stop.sh</code> command is now consistent with the <code>rexster-stop.sh</code> in terms of parameter naming and shorthand.</li>
-	<li>Retrieve adjacent vertices through <span class="caps">REST</span> <span class="caps">API</span> of the vertex resource.</li>
+	<li>Retrieve adjacency vertices through <span class="caps">REST</span> <span class="caps">API</span> of the vertex resource.</li>
 	<li>Filter by multiple edge labels in the <span class="caps">REST</span> <span class="caps">API</span> of the vertex resource.</li>
 	<li><span class="caps">PUT</span> on vertex and edge resources in the <span class="caps">REST</span> <span class="caps">API</span> replaces all graph element properties with the specified set.</li>
 	<li>Combine rexster-start.sh and rexster-stop.sh into rexster.sh with new <code>-version</code> and <code>-status</code> commands.</li>
@@ -146,6 +167,8 @@
 	</ul></li>
 	<li>RexPro sessions that remain idle for a configurable amount of time are destroyed.</li>
 	<li>Support <span class="caps">OPTIONS</span> <span class="caps">HTTP</span> method for all <span class="caps">REST</span> resources so that <span class="caps">HTTP</span> Access Control works properly when used (eg. jquery).</li>
+	<li>New Batch Kibble makes it possible to execute commands in a batch/transactional fashion.</li>
+	<li>Bring all Kibbles up to the latest version of <span class="caps">REST</span> <span class="caps">API</span> changes for the current version of Rexster.</li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-dogstar.png" alt="" /></p>
 <h3>Version 0.5 (Dog Star &#x2014; August 1, 2011)</h3>
 <pre><code> &lt;dependency&gt;
@@ -273,7 +296,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>spmallette</b>, 2012-05-20 14:33:18</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-23 17:48:32</p>
 </div>
 </div>
 

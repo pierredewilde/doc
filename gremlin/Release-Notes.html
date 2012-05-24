@@ -50,7 +50,35 @@
   <div class="wrap">
   <div id="wiki-body" class="gollum-textile-content">
     <div id="template">
-      <h2>Gremlin 1.X</h2>
+      <p>Gremlin: A Graph Traversal Language<br /><a href="../gremlin/Home.html">http://gremlin.tinkerpop.com</a></p>
+<h2>Gremlin 2.y.z</h2>
+<p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-2.png" alt="" /></p>
+<h3>Version 2.0.0 (May 23, 2012)</h3>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop.gremlin&lt;/groupId&gt;
+  &lt;artifactId&gt;gremlin-java&lt;/artifactId&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+  &lt;groupId&gt;com.tinkerpop.gremlin&lt;/groupId&gt;
+  &lt;artifactId&gt;gremlin-groovy&lt;/artifactId&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<ul><li>Removed Gremlin-Scala from the main Gremlin distribution</li>
+	<li>Added <code>tree</code>-step based on the <code>TreePipe</code> to support representing the branch of a traversal</li>
+	<li>Added <code>order</code>-step based on the <code>OrderPipe</code> to support in-stream ordering</li>
+	<li>Removed <code>VerticesPipe</code> and <code>EdgesPipes</code> as should be called via <code>getVertices()</code> and <code>getEdges()</code> in <code>GremlinPipeline</code> constructor</li>
+	<li>Added <code>QueryPipe</code> support automated optimizations around <code>Vertex.query()</code></li>
+	<li>Added <code>GremlinPipeline.enablePath()</code> to allow for non-automated path enabling</li>
+	<li>Provided <code>GremlinPipeline.optimize(boolean)</code> to control whether the pipeline is query optimized</li>
+	<li>The <code>Imports</code> class now provides static imports for <code>Direction</code> and <code>Transaction</code> enums</li>
+	<li>Gremlin-Groovy
+	<ul><li>Renamed <code>paths</code>-step to simply <code>path</code> as now in Pipes the method is called <code>Pipe.getCurrentPath()</code></li>
+		<li>Bumped to support GMaven 1.4</li>
+	</ul></li>
+</ul><hr /><h2>Gremlin 1.X</h2>
 <p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-no-more-mr-nice-guy.png" alt="" /></p>
 <h3>Version 1.5 (No More Mr. Nice Guy &#x2014; February 28, 2012)</h3>
 <pre><code>&lt;dependency&gt;
@@ -84,6 +112,7 @@
 	<li>Gremlin-Groovy
 	<ul><li>Removed the <code>JSONSlurper</code> vertex and edge overloaded methods</li>
 		<li><code>Gremlin.load()</code> now makes use of method reflection to build the language tokens</li>
+		<li>Increased the performance of <code>Element.key</code> by approximately a factor of 10</li>
 	</ul></li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-chickenwing.png" alt="" /></p>
 <h3>Version 1.4 (Ain&#x2019;t No Thing But a Chicken Wing &#x2014; December 7, 2011)</h3>
@@ -109,17 +138,17 @@
 		<li>Added <code>gremlin-java</code> as the Java representation of the Gremlin language</li>
 		<li>Added <code>gremlin-groovy</code> as the Groovy representation of the Gremlin language</li>
 		<li>Added <code>gremlin-scala</code> as the Scala representation of the Gremlin language</li>
+		<li>Added <code>IndexElementsPipe</code> as a start pipe that pulls elements from an index</li>
+		<li>Renamed <code>uniqueObject</code> step to <code>dedup</code></li>
+		<li>Renamed <code>orFilter</code> and <code>andFilter</code> to <code>or</code> and <code>and</code>, respectively</li>
+		<li>Renamed <code>uniquePath</code> to <code>simplePath</code></li>
 	</ul></li>
-	<li>Added <code>IndexElementsPipe</code> as a start pipe that pulls elements from an index</li>
-	<li>Renamed <code>uniqueObject</code> step to <code>dedup</code></li>
-	<li>Renamed <code>orFilter</code> and <code>andFilter</code> to <code>or</code> and <code>and</code>, respectively</li>
-	<li>Renamed <code>uniquePath</code> to <code>simplePath</code></li>
 	<li>Added <code>store</code> step to support lazily loading of objects into collection</li>
 	<li>Added <code>dedup{closure}</code> to allow for uniqueness determination as a function</li>
 	<li><code>gremlin-groovy</code> updates
 	<ul><li>Renamed <code>Graph.saveGraphJSON()</code> to <code>Graph.saveGrapSON()</code> (likewise for load method)</li>
 		<li>No more <code>_()</code> required off of graph-based objects</li>
-		<li>No more <code>[ [ ]]</code> filtering supported</li>
+		<li>No more <code><a class="internal absent" href="/"></a></code> filtering supported</li>
 		<li>No more support for <code>&gt;&gt;</code> syntax
 		<ul><li><code>&gt;&gt;1</code> is <code>next()</code></li>
 			<li><code>&gt;&gt;2</code> is <code>next(2)</code></li>
@@ -156,8 +185,8 @@
   &lt;version&gt;1.2&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 <ul><li>Added respective pipe support for <code>Vertex.getOutEdges(String...)</code> and <code>Vertex.getInEdges(String...)</code></li>
-	<li>Added path closures to <code>paths</code> to allow for post-processing a returned path</li>
-	<li>Added map entry closures to <code>groupCount</code> to allow for pre-processing an entry&#x2019;s key/value pairs</li>
+	<li>Added path functions to <code>paths</code> to allow for post-processing a returned path</li>
+	<li>Added map entry functions to <code>groupCount</code> to allow for pre-processing an entry&#x2019;s key/value pairs</li>
 	<li>Added <code>Gremlin.version()</code> to get version information (returns <code>GremlinTokens.VERSION</code>)</li>
 	<li>Added <code>Gremlin.defineStep()</code> to make it simple for developers to add new steps</li>
 	<li>Added support for <code>Graph.loadGraphML(URL)</code></li>
@@ -168,7 +197,7 @@
 	</ul></li>
 	<li>Update <code>g.idx()</code> to reflect <code>null</code> behavior of Blueprints index <span class="caps">API</span> update</li>
 	<li>Added <code>map</code> step to emit an element&#x2019;s property map</li>
-	<li>Added support for <code>aggregate</code> step closure to process object prior to insertion into the aggregate collection</li>
+	<li>Added support for <code>aggregate</code> step function to process object prior to insertion into the aggregate collection</li>
 	<li>Bumped to Groovy 1.8.1</li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-clownin-around.png" alt="" /></p>
 <h3>Version 1.1 (Clownin&#x2019; Around &#x2014; June 15, 2011)</h3>
@@ -201,11 +230,11 @@
 	<li>Added <code>copySplit</code>, <code>fairMerge</code>, <code>exhaustMerge</code></li>
 	<li><code>SailLoader</code> is loaded on startup (no longer required by developer)</li>
 	<li>Faster <code>Gremlin.compile()</code> using <code>GremlinScriptEngine</code></li>
-	<li>Renamed <code>andf</code>, <code>off</code>, and <code>propf</code> to <code>andFilter</code>, <code>orFilter</code>, and <code>propFilter</code></li>
-	<li>Moved to the more optimal vertex/edge adjacency Pipes</li>
+	<li>Renamed <code>andf</code>, <code>orf</code>, and <code>propf</code> to <code>andFilter</code>, <code>orFilter</code>, and <code>propFilter</code></li>
+	<li>Moved to the more optimal vertex/edge incidence Pipes</li>
 	<li>Renamed <code>unique</code> to <code>uniqueObject</code></li>
 	<li>Updated Gremlin-specific pipes to support <code>reset()</code> <span class="caps">API</span></li>
-</ul><h2>Gremlin 0.X</h2>
+</ul><hr /><h2>Gremlin 0.X</h2>
 <p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-gremlin-the-grouch.png" alt="" /></p>
 <h3>Version 0.9 (Gremlin the Grouch &#x2014; April 4, 2011)</h3>
 <pre><code>&lt;dependency&gt;
@@ -229,7 +258,7 @@
   &lt;version&gt;0.8&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 <ul><li>Added new steps
-	<ul><li><code>emit</code> to emit results of provided closure</li>
+	<ul><li><code>emit</code> to emit results of provided function</li>
 		<li><code>ifelse</code> to perform a if/then/else branch</li>
 		<li><code>uniquePath</code> to filter looping paths</li>
 	</ul></li>
@@ -253,7 +282,7 @@
 &lt;/dependency&gt;</code></pre>
 <ul><li>Added many new steps
 	<ul><li><code>loop</code> step for in-line looping</li>
-		<li><code>foreach</code> step for closure based operations on flowing objects</li>
+		<li><code>foreach</code> step for function based operations on flowing objects</li>
 		<li><code>back</code> step for backtracking in pipeline (i.e. <code>../</code>)</li>
 		<li><code>aggregate</code>, <code>except</code>, and <code>retain</code> for except/retain pattern</li>
 		<li><code>groupCount</code> for map aggregations (i.e. <code>g:op-value()</code>)</li>
@@ -272,13 +301,13 @@
 	<li>Fixed <code>if/else</code> bug that occurred on function call</li>
 	<li><code>null</code> and empty iterator/iterable result now printed in console</li>
 	<li>Empty path expression returns an empty iterable, not <code>null</code></li>
-	<li>Added <code>g:copy-ve()</code> function that conveniently copies an element from one graph into another</li>
+	<li>Added <code>g:copy-e()</code> function that conveniently copies an element from one graph into another</li>
 	<li>Fixed numerous bugs in how functions were computing atoms</li>
 	<li>GPath optimization through auto-reset of Gremlin-specific range-based pipes</li>
 	<li>Comparing numbers is now possible without casting</li>
 	<li>Fixed a major bug in error message handling (many exceptions w/o message being provided in console)</li>
 	<li>Improved Gremlin evaluator load time with static function and step loading</li>
-	<li>Added support for <a href="../blueprints/Home.html">Blueprints</a> 0.3 multi-indexes
+	<li>Added support for Blueprints 0.3 multi-indexes
 	<ul><li><code>g:add-aidx-key()</code>, <code>g:add-idx()</code>, <code>g:drop-idx()</code>, <code>g:show-aidx-keys()</code>, <code>g:show-idx()</code>, <code>g:remove-aidx-keys()</code></li>
 	</ul></li>
 	<li>Added <code>return ?object</code> to return from a user defined function or step</li>
@@ -389,17 +418,20 @@
 	<li>Added better support for vertex and edge property indexing</li>
 	<li>Added working graph <code>$_g</code> variable and updated graph functions to support it</li>
 	<li>Added support for <a href="http://www.w3.org/TR/rdf-sparql-query/"><span class="caps">SPARQL</span></a> queries for <span class="caps">SAIL</span>-based graphs
-	<ul><li><code>list sail:sparql(string)</code> was added</li>
+	<ul><li><code>list sail:sparql(graph?, string)</code> was added</li>
 	</ul></li>
 	<li>Added support for Linked Data <span class="caps">SAIL</span> for real-time analysis of the Web of Data</li>
 	<li>Added support for script loading
 	<ul><li><code>script gremlin-script.grm</code></li>
 	</ul></li>
-	<li>Added support for <span class="caps">JUNG</span> algorithms over Gremlin graphs</li>
+	<li>Added support for <span class="caps">JUNG</span> algorithms over Gremlin graphs
+	<ul><li><code>map jung:pagerank(graph?, map?)</code></li>
+		<li><code>list jung:dijkstra(graph?, vertex, vertex, map?)</code></li>
+	</ul></li>
 	<li>Renamed <code>g:append(object, object+)</code> to <code>g:list(object+)</code></li>
 	<li>Renamed the general graph model to property graph model
 	<ul><li>Moved the model and its implementations to <a href="../blueprints/Home.html">Blueprints</a></li>
-		<li>Uses Blueprints 0.1</li>
+		<li>Dependency is on Blueprints 0.1</li>
 	</ul></li>
 	<li>Various bug fixes and optimizations</li>
 </ul><hr /><p><img src="https://github.com/tinkerpop/gremlin/raw/master/doc/images/gremlin-xmas-alpha.png" alt="" /></p>
@@ -417,7 +449,7 @@
 
 </div>
 <div id="footer">
-  <p id="last-edit">Last edited by <b>pierredewilde</b>, 2012-05-18 22:40:00</p>
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-05-23 17:36:21</p>
 </div>
 </div>
 
