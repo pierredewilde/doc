@@ -1,6 +1,6 @@
 !http://tinkerpop.com/images/tinkerpop-splash.png!
 
-h1. TinkerPop 2.0.0 Documentation
+h1. TinkerPop 2.1.0 Documentation
 
 "TinkerPop":http://tinkerpop.com documentation for:
 
@@ -13,4 +13,4 @@ h1. TinkerPop 2.0.0 Documentation
 
 TinkerPop documentation generated from GitHub TinkerPop wikis to .html files with "gollum":https://github.com/github/gollum
 
-Last update: 2012-05-25
+Last update: 2012-08-24
