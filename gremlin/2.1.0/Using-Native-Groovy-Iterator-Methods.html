@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Using Native Groovy Iterator Methods</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.1.0</a> - <a href="Home.html">Gremlin</a></h3>
+  <h1>Using Native Groovy Iterator Methods</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Using-Native-Groovy-Iterator-Methods"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Using-Native-Groovy-Iterator-Methods"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>A pipe can be seen as a type of groovy iterator. <a href="http://groovy.codehaus.org/groovy-jdk/java/util/Iterator.html">Groovy iterator methods</a> such as <code>sort</code> and <code>reverse</code>, are available.</p>
+<pre><code>g.v(1).out.outE.back(1).sort{it.lang}.reverse().toList()</code></pre>
+<p>Groovy iterators, as Groovy objects, inherit <a href="http://groovy.codehaus.org/groovy-jdk/java/lang/Object.html">object methods</a> and as such <code>any</code>, <code>each</code>, and <code>every</code>.</p>
+<p>One thing to be wary about when using native Groovy methods. They do not returns Pipes, but iterators, iterables, etc. As such, to convert one of these objects back into a Pipeline flow, use _.</p>
+<pre><code>g.v(1).out.sort{it.lang}.reverse()._().outE</code></pre>
+<h2>References</h2>
+<p><a href="https://groups.google.com/forum/#!msg/gremlin-users/A8bZHSOxgyA/9Pyb2wl3I8YJ">[gremlin-users] Sorting Graph Query Results with Gremlin</a></p>
+<p><a href="http://naleid.com/blog/2008/12/01/groovy-makes-iteration-easy/">[Ted Naleid] Groovy Makes Iteration Easy</a></p>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-08-04 21:07:00</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>
