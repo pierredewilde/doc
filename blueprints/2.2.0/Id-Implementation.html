@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Id Implementation</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.2.0</a> - <a href="Home.html">Blueprints</a></h3>
+  <h1>Id Implementation</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Id-Implementation"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Id-Implementation"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p><img src="http://upload.wikimedia.org/wikipedia/commons/2/2c/Fingerprintforcriminologystubs2.png" width="100px" /></p>
+<pre><code>&lt;dependency&gt;
+   &lt;groupId&gt;com.tinkerpop.blueprints&lt;/groupId&gt;
+   &lt;artifactId&gt;blueprints-core&lt;/artifactId&gt;
+   &lt;version&gt;??&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<p><code>IdGraph</code> is a graph wrapper which affords complete control over element ids.  Some <code>Graph</code> implementations, such as <code>TinkerGraph</code>, allow you to specify your own ids when you create elements, e.g.</p>
+<pre><code>Graph g = new TinkerGraph();
+Vertex v = g.addVertex("42");
+System.out.println(v.getId()); // prints "42"</code></pre>
+<p>Other graph implementations, however, choose element ids for you, e.g.</p>
+<pre><code>Graph g = new Neo4jGraph("/tmp/neo");
+Vertex v = g.addVertex("42");
+System.out.println(v.getId()); // prints "0"</code></pre>
+<p>This means that ids are generally not conserved when you move data between graph instances and implementations, to <span class="caps">XML</span> and back again, etc.  So for applications which need it, there is <code>IdGraph</code>.  Using vertex and edge indices under the hood, <code>IdGraph</code> enables custom ids regardless of whether the underlying Graph implementation allows them.  The only requirement is that the underlying graph is an instance of <code>IndexableGraph</code>.  E.g.</p>
+<pre><code>IndexableGraph g0 = new Neo4jGraph("/tmp/neo");
+Graph g = new IdGraph(g0);
+Vertex v = g.addVertex("42");
+System.out.println(v.getId()); // prints "42"</code></pre>
+<p>When a non-null id is passed to <code>IdGraph.addVertex</code> or <code>IdGraph.addEdge</code>, that id will be used to uniquely identify the element.  When <code>null</code> is passed in, <code>IdGraph</code> will generate an id for you.  By default, the generated id is a pseudo-random <span class="caps">UUID</span> string.  However, you can supply your own id factory when instantiating <code>IdGraph</code>:</p>
+<pre><code>final Random random = new Random();
+IdIndexGraph.IdFactory f = new IdIndexGraph.IdFactory() {
+    public Object createId() {
+        return random.nextInt();
+    }};
+IndexableGraph g0 = new Neo4jGraph("/tmp/neo");
+Graph g = new IdGraph(g0, f);
+Vertex v = g.addVertex(null);
+System.out.println(v.getId()); // prints the random integer id of the vertex</code></pre>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-12-19 22:02:34</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>
