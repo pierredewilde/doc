@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="../../public/css/gollum.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/editor.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/dialog.css" media="all">
+  <link rel="stylesheet" type="text/css" href="../../public/css/template.css" media="all">
+  
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="../../public/css/ie7.css" media="all">
+  <![endif]-->
+  
+  <script type="text/javascript" src="../../public/css/jquery.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.dialog.js"></script>
+  <script type="text/javascript" src="../../public/css/gollum.placeholder.js"></script>
+  
+  <script type="text/javascript" 
+    src="../../public/css/editor/gollum.editor.js"></script>
+  <title>Distribution</title>
+</head>
+<body>
+
+<div id="wiki-wrapper" class="page">
+<div id="head"><h3><a href="../../index.html">TinkerPop 2.3.0</a> - <a href="Home.html">Furnace</a></h3>
+  <h1>Distribution</h1>
+  <ul class="actions">
+    <li class="minibutton"><a href="/pages"
+      class="action-all-pages">All Pages</a></li>
+    <li class="minibutton" class="jaws">
+      <a href="#" id="minibutton-new-page">New Page</a></li>
+    <li class="minibutton"><a href="/edit/Distribution"
+       class="action-edit-page">Edit Page</a></li>
+    <li class="minibutton"><a href="/history/Distribution"
+       class="action-page-history">Page History</a></li>
+  </ul>
+  <div id="searchbar">
+    <form action="/search" method="get" id="search-form">
+    <div id="searchbar-fauxtext">
+      <input type="text" name="q" id="search-query" value="Search&hellip;" autocomplete="off">
+      <a href="#" id="search-submit" title="Search this wiki">
+        <span>Search</span>
+      </a>
+    </div>
+    </form>
+  </div></div>
+<div id="wiki-content">
+  <div class="wrap">
+  <div id="wiki-body" class="gollum-textile-content">
+    <div id="template">
+      <p>A distribution is required by most synthetic network generators to draw values from during the generation, such as the degree distribution of vertices in <a class="internal present" href="Degree-Distribution-Generator.html">Degree Distribution Generator</a> or the size of communities in <a class="internal present" href="Community-Generator.html">Community Generator</a>.</p>
+<p>Blueprints currently contains the following distributions. By implementing the <code>Distribution</code> interface, the user can define arbitrary distributions to be used with a generator. Please see the JavaDoc for more information on the <code>Distribution</code> interface.</p>
+<h2>Normal Distribution</h2>
+<p><code>NormalDistribution</code> generates values according to a <a href="http://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. The standard deviation of the distribution is configured through the constructor.</p>
+<h2>Power Law Distribution</h2>
+<p><code>PowerLawDistribution</code> generates values according to a <a href="http://en.wikipedia.org/wiki/Power_law">power law</a> which characterizes the degree distribution found in <a href="http://en.wikipedia.org/wiki/Scale-free_network">scale-free networks</a>. The <a href="http://en.wikipedia.org/wiki/Scale-free_network">gamma value</a> of the distribution is configured through the constructor.</p>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div id="footer">
+  <p id="last-edit">Last edited by <b>okram</b>, 2012-12-06 05:05:17</p>
+</div>
+</div>
+
+<script type="text/javascript" src="../../public/css/MathJax/MathJax.js"></script>
+
+
+</body>
+</html>
